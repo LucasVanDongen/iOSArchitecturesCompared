@@ -23,24 +23,10 @@ protocol Differentiable {
 
 class TableViewDataDifferentiator {
     class func differentiate<T: Differentiable>(oldValues: [T], with newValues: [T]) -> TableViewDataDifferences {
-        let initial = (deleted: [T](), updated: [T]())
-        let deletedAndUpdated = oldValues.reduce(initial) { (result: (deleted: [T], updated: [T]), oldValue: T)
-            -> (deleted: [T], updated: [T]) in
-            var newResult = result
-
-            guard let newValue = newValues.first(where: { (newValue) -> Bool in
-                oldValue.isSame(as: newValue)
-            }) else {
-                newResult.deleted.append(oldValue)
-                return newResult
-            }
-
-            guard !newValue.hasChanged(comparedTo: oldValue) else {
-                newResult.updated.append(newValue)
-                return newResult
-            }
-
-            return result
+        let deleted = oldValues.filter { (oldValue) -> Bool in
+            !newValues.contains(where: { (newValue) -> Bool in
+                newValue.isSame(as: oldValue)
+            })
         }
 
         let inserted = newValues.filter { (newValue) -> Bool in
@@ -49,9 +35,15 @@ class TableViewDataDifferentiator {
             })
         }
 
-        return TableViewDataDifferences(rowsToDelete: updatedIndexPaths(for: deletedAndUpdated.deleted,
+        let updated = newValues.filter { (newValue) -> Bool in
+            oldValues.contains(where: { (oldValue) -> Bool in
+                oldValue.isSame(as: newValue)
+            })
+        }
+
+        return TableViewDataDifferences(rowsToDelete: updatedIndexPaths(for: deleted,
                                                                         from: oldValues),
-                                        rowsToUpdate: updatedIndexPaths(for: deletedAndUpdated.updated,
+                                        rowsToUpdate: updatedIndexPaths(for: updated,
                                                                         from: oldValues),
                                         rowsToInsert: insertingIndexPaths(for: inserted, from: oldValues))
     }

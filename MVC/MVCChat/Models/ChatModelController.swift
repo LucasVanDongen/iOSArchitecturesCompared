@@ -76,15 +76,8 @@ class ChatModelController {
         update(.sending(message: sendingMessage, updatingChat: chat))
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            guard let chat = loadedChats.first(where: { $0.contact == chat.contact }),
-                let message = chat.messages.first(where: { $0.sendDate == sendingMessage.sendDate
-            }) else {
-                return update(.failed(reason:
-                    "Chat you're sending to or message you're trying to send doesn't or no longer seems to exist"))
-            }
-
-            message.sent()
-            update(.sent(message: message, updatedChat: chat))
+            sendingMessage.sent()
+            update(.sent(message: sendingMessage, updatedChat: chat))
         }
     }
 
@@ -96,6 +89,7 @@ class ChatModelController {
         }
 
         chat.messages.append(message)
+        updateUnread()
     }
 
     static func read(messages: [Message], from chat: Chat, whenUpdated update: @escaping (ReadMessageUpdate) -> Void) {
@@ -125,13 +119,14 @@ class ChatModelController {
     }
 
     private static func updateUnread() {
-        let newUnreadTotal = loadedChats.flatMap { $0.messages }.filter({ (message) -> Bool in
+        let unread = loadedChats.flatMap { $0.messages }.filter({ (message) -> Bool in
             if case Message.State.read = message.state {
                 return false
             }
 
             return true
-        }).count
-        UIApplication.shared.applicationIconBadgeNumber = newUnreadTotal
+        })
+
+        UIApplication.shared.applicationIconBadgeNumber = unread.count
     }
 }

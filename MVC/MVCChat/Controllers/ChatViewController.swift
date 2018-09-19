@@ -40,7 +40,6 @@ class ChatViewController: UIViewController {
         ConversationSimulator.createdConversation(with: chat.contact)
 
         title = chat.contact
-        customView.configure(with: chat.messages)
         ChatWebSocketController.startSocket(for: chat) { [weak self] (message) in
             guard let chat = self?.chat,
                 let messages = ChatModelController.loadedChats.first(where: { (loadedChat) -> Bool in
@@ -49,18 +48,29 @@ class ChatViewController: UIViewController {
                 return assertionFailure("Chat for this socket cannot be found")
             }
 
+            guard let strongSelf = self else {
+                return
+            }
+
             switch message {
-            case .new:
-                self?.customView.configure(with: messages)
-                self?.delegate?.updated(chat: chat)
+            case .new(let message):
+                strongSelf.customView.configure(with: messages)
+                strongSelf.delegate?.updated(chat: chat)
+                strongSelf.read(messages: [message])
             case .read:
-                self?.customView.configure(with: messages)
+                strongSelf.customView.configure(with: messages)
             }
         }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        // Dirty trick to not disturb the segue animation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.customView.configure(with: self.chat.messages)
+            self.read(messages: self.chat.messages)
+        }
 
         // Start receiving fake responses through the websocket again
         ConversationSimulator.enteredChatViewController(ofConversationWith: chat.contact)
@@ -74,6 +84,28 @@ class ChatViewController: UIViewController {
         ConversationSimulator.leftChatViewController(ofConversationWith: chat.contact)
     }
 
+    func read(messages: [Message]) {
+        // Only update the unread message when it's the other's message and still unread
+        let messagesThatShouldBeFlaggedRead = messages.filter { (message) -> Bool in
+            guard case .other = message.sender,
+                case .sent = message.state else {
+                    return false
+            }
+
+            return true
+        }
+
+        ChatModelController.read(messages: messagesThatShouldBeFlaggedRead, from: chat) { [weak self] update in
+            switch update {
+            case .failed(let reason):
+                self?.customView.state = .failed(reason: reason)
+            case .locallyUpdated(let chat):
+                self?.delegate?.updated(chat: chat)
+            case .remoteUpdated(let chat):
+                self?.delegate?.updated(chat: chat)
+            }
+        }
+    }
 }
 
 extension ChatViewController: ChatDelegate {
@@ -113,31 +145,6 @@ extension ChatViewController: ChatDelegate {
             }
 
             delegate.updated(chat: updatedChat)
-        }
-    }
-
-    func read(messages: [Message]) {
-        // Only update the unread message when it's the other's message and still unread
-        let messagesThatShouldBeFlaggedRead = messages.filter { (message) -> Bool in
-            guard case .other = message.sender,
-                case .sent = message.state else {
-                    return false
-            }
-
-            return true
-        }
-
-        print("😎 reading \(messagesThatShouldBeFlaggedRead) messages")
-
-        ChatModelController.read(messages: messagesThatShouldBeFlaggedRead, from: chat) { [weak self] update in
-            switch update {
-            case .failed(let reason):
-                self?.customView.state = .failed(reason: reason)
-            case .locallyUpdated(let chat):
-                self?.delegate?.updated(chat: chat)
-            case .remoteUpdated(let chat):
-                self?.delegate?.updated(chat: chat)
-            }
         }
     }
 }

@@ -14,7 +14,7 @@ class PushNotificationController {
         let content = notification.request.content
         let date = DateParser.date(from: content.subtitle) ?? Date()
         let sender: Message.Sender = .other(name: content.title)
-        let pushedMessage = Message(with: sender, message: content.body, sendDate: date)
+        let pushedMessage = Message(with: sender, message: content.body, state: .sent, sendDate: date)
         ChatModelController.received(message: pushedMessage, by: content.title)
 
         result(shouldShowNotification(for: content.title))

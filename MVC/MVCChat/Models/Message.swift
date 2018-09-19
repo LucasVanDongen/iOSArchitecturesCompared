@@ -37,7 +37,7 @@ class Message {
         state = .read(readDate: readDate)
     }
 
-    init(with sender: Sender, message: String, state: State = .sent, sendDate: Date = Date()) {
+    init(with sender: Sender, message: String, state: State, sendDate: Date) {
         self.sender = sender
         self.message = message
         self.state = state

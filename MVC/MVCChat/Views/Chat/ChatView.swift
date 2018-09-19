@@ -11,7 +11,6 @@ import Constraint
 
 protocol ChatDelegate: class {
     func send(message: String)
-    func read(messages: [Message])
 }
 
 class ChatView: UIView {
@@ -180,20 +179,24 @@ class ChatView: UIView {
     private func loadChangedData<T: Differentiable>(between previousValues: [T], and newValues: [T], animated: Bool) {
         let changedValues = TableViewDataDifferentiator.differentiate(oldValues: previousValues, with: newValues)
         let animation: UITableViewRowAnimation = animated ? .automatic : .none
+
+        if !animated {
+            UIView.setAnimationsEnabled(false)
+        }
+
         messageList.performBatchUpdates({
-            if !animated {
-                UIView.setAnimationsEnabled(false)
-            }
             messageList.insertRows(at: changedValues.rowsToInsert, with: animation)
             messageList.reloadRows(at: changedValues.rowsToUpdate, with: .none)
             messageList.deleteRows(at: changedValues.rowsToDelete, with: animation)
-            if !animated {
-                UIView.setAnimationsEnabled(true)
-            }
+
             rowCount = newValues.count
         }, completion: { [weak self] (isCompleted) in
             guard isCompleted else {
                 return
+            }
+
+            if !animated {
+                UIView.setAnimationsEnabled(true)
             }
 
             guard let lastInsertedIndexPath = changedValues.rowsToInsert.last else {
@@ -201,7 +204,6 @@ class ChatView: UIView {
             }
 
             self?.scrollToLast(lastInsertedIndexPath: lastInsertedIndexPath, animated: animated)
-            self?.sendReadMessages()
         })
     }
 
@@ -212,11 +214,6 @@ class ChatView: UIView {
         }
 
         messageList.scrollToRow(at: lastInsertedIndexPath, at: .bottom, animated: animated)
-    }
-
-    private func sendReadMessages() {
-        delegate?.read(messages: readMessages)
-        readMessages = []
     }
 
     private func setup() {
@@ -311,18 +308,6 @@ extension ChatView: UITableViewDelegate {
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         message.endEditing(true)
-    }
-
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        sendReadMessages()
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard indexPath.row < messages.count else {
-            return assertionFailure("Row should not be out of bounds")
-        }
-
-        readMessages.append(messages[indexPath.row])
     }
 }
 

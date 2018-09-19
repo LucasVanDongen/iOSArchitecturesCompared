@@ -28,7 +28,7 @@ class SimulatedConversation {
 
     func enteredChatViewController() {
         print("🤖: Will send the messages from \(contact) through the web socket again now")
-        state = .inApp
+        state = .webSocket
     }
 
     func leftChatViewController() {
