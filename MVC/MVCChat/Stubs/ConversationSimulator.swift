@@ -15,11 +15,9 @@ class ConversationSimulator {
         guard !simulatedConversations.contains(where: { simulatedConversation in
             simulatedConversation.contact == contact
         }) else {
-            print("✄ simulated conversation for \(contact) already existed")
             return
         }
 
-        print("✄ created new simulated conversation for \(contact)")
         let simulatedConversation = SimulatedConversation(with: contact)
         simulatedConversations.append(simulatedConversation)
     }
@@ -28,22 +26,18 @@ class ConversationSimulator {
         guard let foundConversation = simulatedConversations.first(where: { simulatedConversation in
             simulatedConversation.contact == contact
         }) else {
-            print("✄ no simulated conversation found for \(contact) while sending message '\(message.message)")
             return
         }
 
-        print("✄ reused simulated conversation with \(contact) when sending message '\(message.message)")
         let simulatedConversation = foundConversation
         simulatedConversation.receivedMessage()
         StubMessageSender.triggerResponses(in: simulatedConversation, by: message)
     }
 
     class func enteredChatViewController(ofConversationWith contact: String) {
-        print("✄ entering chat view controller of \(contact)")
         guard let simulatedConveration = simulatedConversations.first(where: { simulatedConversation in
             simulatedConversation.contact == contact
         }) else {
-            print("✄ no simulated conversation with \(contact) found when entering")
             return
         }
 
@@ -51,11 +45,9 @@ class ConversationSimulator {
     }
 
     class func leftChatViewController(ofConversationWith contact: String) {
-        print("✄ leaving chat view controller of \(contact)")
         guard let simulatedConveration = simulatedConversations.first(where: { simulatedConversation in
             simulatedConversation.contact == contact
         }) else {
-            print("✄ no simulated conversation with \(contact) found when leaving")
             return
         }
 

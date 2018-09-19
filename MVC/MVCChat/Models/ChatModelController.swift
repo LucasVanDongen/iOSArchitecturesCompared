@@ -105,17 +105,12 @@ class ChatModelController {
 
         messages.forEach { (message) in
             message.read(readDate: Date())
-            print("😎 '\(message.message)' has been read by you")
         }
         update(.locallyUpdated(chat: chat))
         updateUnread()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            guard loadedChats.contains(where: { $0.contact == chat.contact }) else {
-                return update(.failed(reason: "Chat of message you're reading to doesn't or no longer seems to exist"))
-            }
-
-            //update(.remoteUpdated(chat: loadedChats[chatIndex]))
+            // No action taken after "sending" the read message
         }
     }
 

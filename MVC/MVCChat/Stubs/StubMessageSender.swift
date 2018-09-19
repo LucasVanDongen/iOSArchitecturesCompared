@@ -58,9 +58,7 @@ class StubMessageSender: NSObject {
     private class func read(message: Message, of simulatedConversation: SimulatedConversation,
                             whenDone finished: (() -> Void)? = nil) {
         let readDelay = Double(arc4random_uniform(4)) + 1.5
-        print("Going to read \(message.message)")
         DispatchQueue.main.asyncAfter(deadline: .now() + readDelay) {
-            print("Did read \(message.message)")
             switch simulatedConversation.state {
             case .webSocket:
                 let reader = Message.Sender.other(name: simulatedConversation.contact)
