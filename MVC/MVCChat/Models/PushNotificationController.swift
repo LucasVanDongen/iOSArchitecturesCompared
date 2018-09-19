@@ -14,10 +14,25 @@ class PushNotificationController {
         let content = notification.request.content
         let date = DateParser.date(from: content.subtitle) ?? Date()
         let sender: Message.Sender = .other(name: content.title)
-        let pushedMessage = Message(sender: sender, state: .sent, message: content.body, sendDate: date)
+        let pushedMessage = Message(with: sender, message: content.body, sendDate: date)
         ChatModelController.received(message: pushedMessage, by: content.title)
 
         result(shouldShowNotification(for: content.title))
+
+        guard let chat = ChatModelController.loadedChats.first(where: { (chat) -> Bool in
+            chat.contact == content.title
+        }) else {
+            return assertionFailure("Chat for received message should always exist")
+        }
+
+        BaseNavigationViewController.navigationController?.viewControllers.forEach({ (viewController) in
+            switch viewController {
+            case let chatsViewController as UpdatedChatDelegate:
+                chatsViewController.updated(chat: chat)
+            default:
+                break
+            }
+        })
     }
 
     private static func shouldShowNotification(for contact: String) -> Bool {

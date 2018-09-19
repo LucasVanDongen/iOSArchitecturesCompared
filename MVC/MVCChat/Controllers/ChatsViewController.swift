@@ -71,6 +71,15 @@ extension ChatsViewController: UpdatedChatDelegate {
     }
 
     func updated(chat: Chat) {
+        let unreadMessages = chat.messages.filter {
+            if case .sent = $0.state,
+                case .other = $0.sender {
+                    return true
+            }
+
+            return false
+        }
+        print("😎 updated chat called for \(chat.contact), unread messages: \(unreadMessages.count)")
         customView.state = .loaded(chats: ChatModelController.loadedChats)
     }
 }

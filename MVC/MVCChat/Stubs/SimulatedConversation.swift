@@ -26,11 +26,18 @@ class SimulatedConversation {
         lastReceivedMessage = Date()
     }
 
+    func enteredChatViewController() {
+        print("🤖: Will send the messages from \(contact) through the web socket again now")
+        state = .inApp
+    }
+
     func leftChatViewController() {
+        print("🤖: Will send the messages from \(contact) through push now")
         state = .inApp
     }
 
     func leftApp() {
+        print("🤖: Detected that the app closed. \(contact) might send you a goodbye through push")
         state = .appClosed
     }
 }

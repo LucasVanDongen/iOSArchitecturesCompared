@@ -36,6 +36,9 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Create a new stub message sending object
+        ConversationSimulator.createdConversation(with: chat.contact)
+
         title = chat.contact
         customView.configure(with: chat.messages)
         ChatWebSocketController.startSocket(for: chat) { [weak self] (message) in
@@ -56,6 +59,13 @@ class ChatViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // Start receiving fake responses through the websocket again
+        ConversationSimulator.enteredChatViewController(ofConversationWith: chat.contact)
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
@@ -74,6 +84,13 @@ extension ChatViewController: ChatDelegate {
         }
 
         ChatModelController.send(message: message, to: chat) { [weak self] result in
+            defer {
+                if case .sent(let message, let chat) = result {
+                    // Used to simulate somebody giving responses
+                    ConversationSimulator.sent(message: message, to: chat.contact)
+                }
+            }
+
             guard let strongSelf = self else {
                 return
             }
@@ -86,11 +103,9 @@ extension ChatViewController: ChatDelegate {
             case .sending(_, let chat):
                 strongSelf.customView.state = .sending(updatingMessages: chat.messages)
                 updatedChat = chat
-            case .sent(let message, let chat):
+            case .sent(_, let chat):
                 strongSelf.customView.state = .sent(updatedMessages: chat.messages)
                 updatedChat = chat
-                // Used to simulate somebody giving responses
-                ConversationSimulator.sent(message: message, to: chat.contact)
             }
 
             guard let delegate = self?.delegate else {
@@ -101,15 +116,20 @@ extension ChatViewController: ChatDelegate {
         }
     }
 
-    func read(message: Message) {
+    func read(messages: [Message]) {
         // Only update the unread message when it's the other's message and still unread
-        guard case .other = message.sender,
-            case .sent = message.state else {
-                return
+        let messagesThatShouldBeFlaggedRead = messages.filter { (message) -> Bool in
+            guard case .other = message.sender,
+                case .sent = message.state else {
+                    return false
+            }
+
+            return true
         }
 
-        delegate?.updated(chat: chat)
-        ChatModelController.read(message: message, from: chat) { [weak self] update in
+        print("😎 reading \(messagesThatShouldBeFlaggedRead) messages")
+
+        ChatModelController.read(messages: messagesThatShouldBeFlaggedRead, from: chat) { [weak self] update in
             switch update {
             case .failed(let reason):
                 self?.customView.state = .failed(reason: reason)

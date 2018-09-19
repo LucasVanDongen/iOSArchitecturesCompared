@@ -57,14 +57,16 @@ class StubMessageSender: NSObject {
 
     private class func read(message: Message, of simulatedConversation: SimulatedConversation,
                             whenDone finished: (() -> Void)? = nil) {
-        let readDelay = Double(arc4random_uniform(4)) + 1.0
+        let readDelay = Double(arc4random_uniform(4)) + 1.5
+        print("Going to read \(message.message)")
         DispatchQueue.main.asyncAfter(deadline: .now() + readDelay) {
+            print("Did read \(message.message)")
             switch simulatedConversation.state {
             case .webSocket:
                 let reader = Message.Sender.other(name: simulatedConversation.contact)
                 ChatWebSocketController.read(stub: message, reader: reader)
             case .inApp, .appClosed:
-                return
+                break
             }
 
             finished?()
@@ -81,12 +83,12 @@ class StubMessageSender: NSObject {
 
         let responseDelay = Double(arc4random_uniform(20)) + 5.0
         let again = responsesGiven == 0 ? "" : "again "
-        print("🤖: will send automated response to \(simulatedConversation.contact) \(again)in \(responseDelay)")
+        print("🤖: \(simulatedConversation.contact) will send an automated response \(again)in \(responseDelay)")
         DispatchQueue.main.asyncAfter(deadline: .now() + responseDelay) {
-            let message = Message(sender: .other(name: simulatedConversation.contact),
-            state: .sent, message: response(for: responsesGiven), sendDate: Date())
+            let message = Message(with: .other(name: simulatedConversation.contact),
+                                  message: response(for: responsesGiven), state: .sent, sendDate: Date())
 
-            let baseLog = "🤖: sending automated response to \(simulatedConversation.contact) through"
+            let baseLog = "🤖: sending automated response from \(simulatedConversation.contact) through"
             switch simulatedConversation.state {
             case .webSocket:
                 print("\(baseLog) web socket: \(message.message)!")
@@ -110,8 +112,8 @@ class StubMessageSender: NSObject {
         }
 
         let goodbyeTimeInterval = Double(arc4random_uniform(10)) + 3.0
-        let message = Message(sender: Message.Sender.other(name: conversation.contact),
-                              state: .sent, message: salutes.random ?? "See you!",
+        let message = Message(with: Message.Sender.other(name: conversation.contact),
+                              message: salutes.random ?? "See you!", state: .sent,
                               sendDate: Date().addingTimeInterval(goodbyeTimeInterval))
 
         ChatModelController.received(message: message, by: conversation.contact)

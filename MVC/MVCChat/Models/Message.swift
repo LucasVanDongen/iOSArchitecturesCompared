@@ -8,8 +8,7 @@
 
 import UIKit
 
-struct Message {
-
+class Message {
     enum Sender {
         case user
         case other(name: String)
@@ -26,7 +25,7 @@ struct Message {
     let message: String
     let sendDate: Date
 
-    mutating func sent() {
+    func sent() {
         guard case .sending = state else {
             return
         }
@@ -34,8 +33,15 @@ struct Message {
         state = .sent
     }
 
-    mutating func read(readDate: Date) {
+    func read(readDate: Date) {
         state = .read(readDate: readDate)
+    }
+
+    init(with sender: Sender, message: String, state: State = .sent, sendDate: Date = Date()) {
+        self.sender = sender
+        self.message = message
+        self.state = state
+        self.sendDate = sendDate
     }
 }
 

@@ -11,28 +11,51 @@ import UIKit
 class ConversationSimulator {
     private static var simulatedConversations = [SimulatedConversation]()
 
-    class func sent(message: Message, to contact: String) {
-        let simulatedConversation: SimulatedConversation
-        defer {
-            StubMessageSender.triggerResponses(in: simulatedConversation, by: message)
-        }
-
-        guard let foundConversation = simulatedConversations.first(where: { simulatedConversation in
+    class func createdConversation(with contact: String) {
+        guard !simulatedConversations.contains(where: { simulatedConversation in
             simulatedConversation.contact == contact
         }) else {
-            simulatedConversation = SimulatedConversation(with: contact)
-            simulatedConversations.append(simulatedConversation)
+            print("✄ simulated conversation for \(contact) already existed")
             return
         }
 
-        simulatedConversation = foundConversation
-        simulatedConversation.receivedMessage()
+        print("✄ created new simulated conversation for \(contact)")
+        let simulatedConversation = SimulatedConversation(with: contact)
+        simulatedConversations.append(simulatedConversation)
     }
 
-    class func leftChatViewController(ofConversationWith contact: String) {
+    class func sent(message: Message, to contact: String) {
+        guard let foundConversation = simulatedConversations.first(where: { simulatedConversation in
+            simulatedConversation.contact == contact
+        }) else {
+            print("✄ no simulated conversation found for \(contact) while sending message '\(message.message)")
+            return
+        }
+
+        print("✄ reused simulated conversation with \(contact) when sending message '\(message.message)")
+        let simulatedConversation = foundConversation
+        simulatedConversation.receivedMessage()
+        StubMessageSender.triggerResponses(in: simulatedConversation, by: message)
+    }
+
+    class func enteredChatViewController(ofConversationWith contact: String) {
+        print("✄ entering chat view controller of \(contact)")
         guard let simulatedConveration = simulatedConversations.first(where: { simulatedConversation in
             simulatedConversation.contact == contact
         }) else {
+            print("✄ no simulated conversation with \(contact) found when entering")
+            return
+        }
+
+        simulatedConveration.enteredChatViewController()
+    }
+
+    class func leftChatViewController(ofConversationWith contact: String) {
+        print("✄ leaving chat view controller of \(contact)")
+        guard let simulatedConveration = simulatedConversations.first(where: { simulatedConversation in
+            simulatedConversation.contact == contact
+        }) else {
+            print("✄ no simulated conversation with \(contact) found when leaving")
             return
         }
 

@@ -40,12 +40,11 @@ class ChatModelController {
                 return
             }
 
-            let message = Message(sender: .other(name: "John"),
-                                  state: .sent,
-                                  message: "Hi, you're here too?",
+            let message = Message(with: .other(name: "John"),
+                                  message: "Hi, you're here too?", state: .sent,
                                   sendDate: Date().addingTimeInterval(-500))
             let chats = [
-                Chat(contact: "John", messages: [message])
+                Chat(with: "John", messages: [message])
             ]
             loadedChats = chats
             result(.success(chats: chats))
@@ -61,71 +60,73 @@ class ChatModelController {
                 return result(.reused(chat: existingChat))
             }
 
-            let chat = Chat(contact: contact, messages: [])
+            let chat = Chat(with: contact, messages: [])
             loadedChats.insert(chat, at: 0)
             result(.success(createdChat: chat))
         }
     }
 
     class func send(message: String, to chat: Chat, whenUpdated update: @escaping (SendMessageUpdate) -> Void) {
-        guard let index = loadedChats.index(where: { $0.contact == chat.contact }) else {
+        guard let chat = loadedChats.first(where: { $0.contact == chat.contact }) else {
             return update(.failed(reason: "Chat you're sending to doesn't or no longer seems to exist"))
         }
 
-        let sendingMessage = Message(sender: .user, state: .sending, message: message, sendDate: Date())
-        loadedChats[index].messages.append(sendingMessage)
-        update(.sending(message: sendingMessage, updatingChat: loadedChats[index]))
+        let sendingMessage = Message(with: .user, message: message, state: .sending, sendDate: Date())
+        chat.messages.append(sendingMessage)
+        update(.sending(message: sendingMessage, updatingChat: chat))
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            guard let chatIndex = loadedChats.index(where: { $0.contact == chat.contact }),
-                let messageIndex = loadedChats[chatIndex].messages.index(where: { $0.sendDate == sendingMessage.sendDate
-                }) else {
+            guard let chat = loadedChats.first(where: { $0.contact == chat.contact }),
+                let message = chat.messages.first(where: { $0.sendDate == sendingMessage.sendDate
+            }) else {
                 return update(.failed(reason:
                     "Chat you're sending to or message you're trying to send doesn't or no longer seems to exist"))
             }
 
-            loadedChats[chatIndex].messages[messageIndex].sent()
-            update(.sent(message: loadedChats[chatIndex].messages[messageIndex], updatedChat: loadedChats[chatIndex]))
+            message.sent()
+            update(.sent(message: message, updatedChat: chat))
         }
     }
 
     class func received(message: Message, by contact: String) {
-        guard let chatIndex = loadedChats.index(where: { (chat) -> Bool in
+        guard let chat = loadedChats.first(where: { (chat) -> Bool in
             chat.contact == contact
         }) else {
             return assertionFailure("The chat being responded to should exist")
         }
 
-        loadedChats[chatIndex].messages.append(message)
+        chat.messages.append(message)
     }
 
-    static func read(message: Message, from chat: Chat, whenUpdated update: @escaping (ReadMessageUpdate) -> Void) {
-        guard let chatIndex = loadedChats.index(where: { $0.contact == chat.contact }),
-            let messageIndex = loadedChats[chatIndex].messages.index(where: { $0.sendDate == message.sendDate }) else {
-                return update(.failed(reason: "Message you're reading to doesn't or no longer seems to exist"))
+    static func read(messages: [Message], from chat: Chat, whenUpdated update: @escaping (ReadMessageUpdate) -> Void) {
+        guard let chat = loadedChats.first(where: { $0.contact == chat.contact }) else {
+            return update(.failed(reason: "Chat you're reading doesn't or no longer seems to exist"))
         }
 
-        loadedChats[chatIndex].messages[messageIndex].read(readDate: Date())
-        update(.locallyUpdated(chat: loadedChats[chatIndex]))
+        messages.forEach { (message) in
+            message.read(readDate: Date())
+            print("😎 '\(message.message)' has been read by you")
+        }
+        update(.locallyUpdated(chat: chat))
         updateUnread()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            guard let chatIndex = loadedChats.index(where: { $0.contact == chat.contact }) else {
+            guard loadedChats.contains(where: { $0.contact == chat.contact }) else {
                 return update(.failed(reason: "Chat of message you're reading to doesn't or no longer seems to exist"))
             }
 
-            update(.remoteUpdated(chat: loadedChats[chatIndex]))
+            //update(.remoteUpdated(chat: loadedChats[chatIndex]))
         }
     }
 
     static func read(yourMessage message: Message, reader sender: Message.Sender) {
         guard case .other(let contact) = sender,
-            let chatIndex = loadedChats.index(where: { $0.contact == contact }),
-            let messageIndex = loadedChats[chatIndex].messages.index(where: { $0.sendDate == message.sendDate }) else {
+            let chat = loadedChats.first(where: { $0.contact == contact }),
+            let message = chat.messages.first(where: { $0.sendDate == message.sendDate }) else {
                 return assertionFailure("Your message being read should exist")
         }
 
-        loadedChats[chatIndex].messages[messageIndex].read(readDate: Date())
+        message.read(readDate: Date())
     }
 
     private static func updateUnread() {

@@ -11,7 +11,7 @@ import Constraint
 
 protocol ChatDelegate: class {
     func send(message: String)
-    func read(message: Message)
+    func read(messages: [Message])
 }
 
 class ChatView: UIView {
@@ -61,6 +61,7 @@ class ChatView: UIView {
 
     weak var delegate: ChatDelegate?
     private var isFirstLoad = true
+    private var readMessages: [Message] = []
     private var messages: [Message] = [] {
         didSet(previousMessages) {
             guard !isFirstLoad else {
@@ -200,6 +201,7 @@ class ChatView: UIView {
             }
 
             self?.scrollToLast(lastInsertedIndexPath: lastInsertedIndexPath, animated: animated)
+            self?.sendReadMessages()
         })
     }
 
@@ -210,6 +212,11 @@ class ChatView: UIView {
         }
 
         messageList.scrollToRow(at: lastInsertedIndexPath, at: .bottom, animated: animated)
+    }
+
+    private func sendReadMessages() {
+        delegate?.read(messages: readMessages)
+        readMessages = []
     }
 
     private func setup() {
@@ -306,13 +313,16 @@ extension ChatView: UITableViewDelegate {
         message.endEditing(true)
     }
 
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        sendReadMessages()
+    }
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let delegate = delegate,
-            indexPath.row < messages.count else {
-                return assertionFailure("Should have delegate set and row should not be out of bounds")
+        guard indexPath.row < messages.count else {
+            return assertionFailure("Row should not be out of bounds")
         }
 
-        delegate.read(message: messages[indexPath.row])
+        readMessages.append(messages[indexPath.row])
     }
 }
 

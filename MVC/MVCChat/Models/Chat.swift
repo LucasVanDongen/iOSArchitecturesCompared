@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Chat {
+class Chat {
     let contact: String
     var messages: [Message]
     var unreadMessages: Int {
@@ -21,5 +21,10 @@ struct Chat {
     }
     var lastMessage: Date? {
         return messages.last?.sendDate
+    }
+
+    init(with contact: String, messages: [Message] = []) {
+        self.contact = contact
+        self.messages = messages
     }
 }
