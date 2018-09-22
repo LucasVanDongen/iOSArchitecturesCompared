@@ -36,6 +36,7 @@ class ActionButton: UIButton {
         layer.shadowColor = UIColor.lightGray.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.masksToBounds = false
+        setContentCompressionResistancePriority(.required, for: .horizontal)
         let insets = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
         contentEdgeInsets = insets
     }
