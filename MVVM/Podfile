@@ -1,0 +1,16 @@
+platform :ios, '10.0'
+use_frameworks!
+inhibit_all_warnings!
+
+workspace 'MVVMChat'
+
+def base_pods
+    pod 'SwiftLint'
+    pod 'R.swift'
+    pod 'Constraint'
+end
+
+target 'MVVMChat' do
+    project 'MVVMChat.xcodeproj'
+    base_pods
+end
