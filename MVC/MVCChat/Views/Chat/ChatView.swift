@@ -61,6 +61,7 @@ class ChatView: UIView {
     weak var delegate: ChatDelegate?
     private var isFirstLoad = true
     private var readMessages: [Message] = []
+    private var realHeights: [IndexPath: CGFloat] = [:]
     private var messages: [Message] = [] {
         didSet(previousMessages) {
             guard !isFirstLoad else {
@@ -69,7 +70,7 @@ class ChatView: UIView {
                 return
             }
 
-            loadChangedData(between: previousMessages, and: messages, animated: true)
+            loadChangedData(between: previousMessages, and: messages, animated: false)
         }
     }
     private var rowCount: Int = 0
@@ -203,7 +204,9 @@ class ChatView: UIView {
                 return
             }
 
-            self?.scrollToLast(lastInsertedIndexPath: lastInsertedIndexPath, animated: animated)
+            //DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self?.scrollToLast(lastInsertedIndexPath: lastInsertedIndexPath, animated: true)
+            //})
         })
     }
 
@@ -303,7 +306,15 @@ extension ChatView: UITableViewDataSource {
 
 extension ChatView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let realHeight = realHeights[indexPath] {
+            return realHeight
+        }
+
         return 70
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        realHeights[indexPath] = tableView.rectForRow(at: indexPath).height
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
