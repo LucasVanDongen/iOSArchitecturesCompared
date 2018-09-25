@@ -31,7 +31,7 @@
 		A0C8EA7B21503E2D0025F31B /* SimulatedConversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA7A21503E2D0025F31B /* SimulatedConversation.swift */; };
 		A0C8EA7D21504E600025F31B /* StubMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA7C21504E600025F31B /* StubMessageSender.swift */; };
 		A0C8EA7F21505A6C0025F31B /* PushNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA7E21505A6C0025F31B /* PushNotificationController.swift */; };
-		A0C8EA8121505A8C0025F31B /* PushNotificatoinController+StubMessageSending.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA8021505A8C0025F31B /* PushNotificatoinController+StubMessageSending.swift */; };
+		A0C8EA8121505A8C0025F31B /* PushNotificationController+StubMessageSending.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA8021505A8C0025F31B /* PushNotificationController+StubMessageSending.swift */; };
 		A0C8EA8321505AC50025F31B /* ChatWebSocketController+StubMessageSending.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA8221505AC50025F31B /* ChatWebSocketController+StubMessageSending.swift */; };
 		A0C8EA8521519BAE0025F31B /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA8421519BAE0025F31B /* DateParser.swift */; };
 		A0DB1DE9214767D800808129 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB1DE8214767D800808129 /* AppDelegate.swift */; };
@@ -71,7 +71,7 @@
 		A0C8EA7A21503E2D0025F31B /* SimulatedConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatedConversation.swift; sourceTree = "<group>"; };
 		A0C8EA7C21504E600025F31B /* StubMessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMessageSender.swift; sourceTree = "<group>"; };
 		A0C8EA7E21505A6C0025F31B /* PushNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationController.swift; sourceTree = "<group>"; };
-		A0C8EA8021505A8C0025F31B /* PushNotificatoinController+StubMessageSending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PushNotificatoinController+StubMessageSending.swift"; sourceTree = "<group>"; };
+		A0C8EA8021505A8C0025F31B /* PushNotificationController+StubMessageSending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PushNotificationController+StubMessageSending.swift"; sourceTree = "<group>"; };
 		A0C8EA8221505AC50025F31B /* ChatWebSocketController+StubMessageSending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatWebSocketController+StubMessageSending.swift"; sourceTree = "<group>"; };
 		A0C8EA8421519BAE0025F31B /* DateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateParser.swift; sourceTree = "<group>"; };
 		A0DB1DE5214767D800808129 /* MVCChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVCChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,7 +187,7 @@
 				A0C8EA7821503D900025F31B /* ConversationSimulator.swift */,
 				A0C8EA7A21503E2D0025F31B /* SimulatedConversation.swift */,
 				A0C8EA7C21504E600025F31B /* StubMessageSender.swift */,
-				A0C8EA8021505A8C0025F31B /* PushNotificatoinController+StubMessageSending.swift */,
+				A0C8EA8021505A8C0025F31B /* PushNotificationController+StubMessageSending.swift */,
 				A0C8EA8221505AC50025F31B /* ChatWebSocketController+StubMessageSending.swift */,
 			);
 			path = Stubs;
@@ -396,7 +396,7 @@
 				A0C8EA68214D812A0025F31B /* Message.swift in Sources */,
 				A0C8EA70214F43F50025F31B /* TableViewDataDifferentiator.swift in Sources */,
 				A0C8EA64214D7FF60025F31B /* ActionButton.swift in Sources */,
-				A0C8EA8121505A8C0025F31B /* PushNotificatoinController+StubMessageSending.swift in Sources */,
+				A0C8EA8121505A8C0025F31B /* PushNotificationController+StubMessageSending.swift in Sources */,
 				A06C150C214A152900833E90 /* Request.swift in Sources */,
 				A0C8EA8521519BAE0025F31B /* DateParser.swift in Sources */,
 				A06C14F9214A0B0C00833E90 /* BaseNavigationViewController.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  PushNotificatoinController+StubMessageSending.swift
+//  PushNotificationController+StubMessageSending.swift
 //  MVCChat
 //
 //  Created by Lucas van Dongen on 17/09/2018.
