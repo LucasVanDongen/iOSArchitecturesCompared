@@ -17,7 +17,7 @@ class PushNotificationController {
         let pushedMessage = Message(with: sender, message: content.body, state: .sent, sendDate: date)
         ChatEventRouter.route(event: .received(message: pushedMessage, contact: content.title))
 
-        result(shouldShowNotification(for: content.title))
+        result(ChatEventHandler.canHandleMessage(for: content.title))
     }
 
     class func handle(response: UNNotificationResponse) {
@@ -30,15 +30,4 @@ class PushNotificationController {
         BaseNavigationViewController.pushViewController(chatViewController, animated: true,
                                                         removePreviousFromStack: false)
     }
-
-    private static func shouldShowNotification(for contact: String) -> Bool {
-        let lastViewController = BaseNavigationViewController.navigationController?.viewControllers.last
-        if let chatViewController = lastViewController as? ChatViewController,
-            chatViewController.chat.contact == contact {
-                return false
-        }
-
-        return true
-    }
-
 }

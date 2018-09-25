@@ -171,6 +171,11 @@ class ChatEventHandler {
         updateApplicationBadge()
     }
 
+    class func canHandleMessage(for contact: String) -> Bool {
+        let listeners = chatListening.filter { $0?.handles(chatWith: contact) ?? false }
+        return !listeners.isEmpty
+    }
+
     private class func updateApplicationBadge() {
         print("Application badge updated to \(ChatModelController.unreadMessageCount())")
         UIApplication.shared.applicationIconBadgeNumber = ChatModelController.unreadMessageCount()
