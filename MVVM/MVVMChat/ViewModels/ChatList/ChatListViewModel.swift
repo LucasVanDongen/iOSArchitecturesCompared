@@ -9,12 +9,9 @@
 import UIKit
 
 struct ChatListViewModel {
-    enum State {
-        case empty
-        case loading
-        case loaded(chats: [ChatListItemViewModel])
-    }
-
-    let state: State
+    let hideEmptyMessage: Bool
+    let hideChats: Bool
+    let showSpinner: Bool
+    let chats: [ChatListItemViewModel]
     let addChat: () -> Void
 }

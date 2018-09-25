@@ -9,55 +9,7 @@
 import UIKit
 import Constraint
 
-protocol ChatsDelegate: class {
-    func selected(chat: Chat)
-}
-
 class ChatsView: UIView {
-
-    enum State {
-        case empty
-        case loading
-        case loaded(chats: [ChatListItemViewModel])
-    }
-
-    var state: State = .empty {
-        didSet {
-            let hideEmptyMessage: Bool
-            let hideChats: Bool
-            let showSpinner: Bool
-            let chats: [ChatListItemViewModel]
-
-            switch state {
-            case .empty:
-                chats = []
-                hideEmptyMessage = false
-                hideChats = true
-                showSpinner = false
-            case .loading:
-                hideEmptyMessage = emptyMessage.isHidden
-                hideChats = chatsTableView.isHidden
-                showSpinner = true
-                chats = self.chats
-            case .loaded(let newChats):
-                chats = newChats
-                hideEmptyMessage = true
-                hideChats = false
-                showSpinner = false
-            }
-
-            self.chats = chats
-            emptyMessage.isHidden = hideEmptyMessage
-            chatsTableView.isHidden = hideChats
-            chatsTableView.reloadData()
-            switch showSpinner {
-            case true: spinner.startAnimating()
-            case false: spinner.stopAnimating()
-            }
-        }
-    }
-
-    weak var delegate: ChatsDelegate?
 
     private var chats = [ChatListItemViewModel]() {
         didSet {
@@ -102,19 +54,17 @@ class ChatsView: UIView {
     }
 
     func display(viewModel: ChatListViewModel) {
-        switch viewModel.state {
-        case .empty:
-            state = .empty
-        case .loading:
-            state = .loading
-        case .loaded(let chats):
-            state = .loaded(chats: chats)
+        self.chats = viewModel.chats
+        emptyMessage.isHidden = viewModel.hideEmptyMessage
+        chatsTableView.isHidden = viewModel.hideChats
+        switch viewModel.showSpinner {
+        case true: spinner.startAnimating()
+        case false: spinner.stopAnimating()
         }
     }
 
     private func setup() {
         addConstraints()
-        state = .empty
         backgroundColor = UIColor.white
     }
 

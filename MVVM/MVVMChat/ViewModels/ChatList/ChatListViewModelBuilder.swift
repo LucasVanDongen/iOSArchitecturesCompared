@@ -11,13 +11,19 @@ import UIKit
 class ChatListViewModelBuilder {
     class func build(for chats: [Chat]) -> ChatListViewModel {
         let chatListItemViewModels = chats.map(ChatListViewModelBuilder.build)
-        let state: ChatListViewModel.State = chatListItemViewModels.isEmpty
-            ? .empty : .loaded(chats: chatListItemViewModels)
-        return ChatListViewModel(state: state, addChat: addChat)
+        return ChatListViewModel(hideEmptyMessage: !chats.isEmpty,
+                                 hideChats: chats.isEmpty,
+                                 showSpinner: false,
+                                 chats: chatListItemViewModels,
+                                 addChat: addChat)
     }
 
     class func buildLoading() -> ChatListViewModel {
-        return ChatListViewModel(state: .loading, addChat: addChat)
+        return ChatListViewModel(hideEmptyMessage: false,
+                                 hideChats: true,
+                                 showSpinner: true,
+                                 chats: [],
+                                 addChat: addChat)
     }
 
     class func build(for chat: Chat) -> ChatListItemViewModel {
