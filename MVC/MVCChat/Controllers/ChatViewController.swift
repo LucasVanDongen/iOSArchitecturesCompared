@@ -41,24 +41,15 @@ class ChatViewController: UIViewController {
 
         title = chat.contact
         ChatWebSocketController.startSocket(for: chat) { [weak self] (message) in
-            guard let chat = self?.chat,
-                let messages = ChatModelController.loadedChats.first(where: { (loadedChat) -> Bool in
-                chat.contact == loadedChat.contact
-            })?.messages else {
-                return assertionFailure("Chat for this socket cannot be found")
-            }
-
             guard let strongSelf = self else {
                 return
             }
 
             switch message {
             case .new(let message):
-                strongSelf.customView.configure(with: messages)
-                strongSelf.delegate?.updated(chat: chat)
-                strongSelf.read(messages: [message])
+                strongSelf.received(message: message)
             case .read:
-                strongSelf.customView.configure(with: messages)
+                strongSelf.refreshMessages()
             }
         }
     }
@@ -105,6 +96,22 @@ class ChatViewController: UIViewController {
                 self?.delegate?.updated(chat: chat)
             }
         }
+    }
+
+    func received(message: Message) {
+        refreshMessages()
+        delegate?.updated(chat: chat)
+        read(messages: [message])
+    }
+
+    private func refreshMessages() {
+        guard let messages = ChatModelController.loadedChats.first(where: { (loadedChat) -> Bool in
+            chat.contact == loadedChat.contact
+        })?.messages else {
+            return assertionFailure("Chat for this ViewController cannot be loaded")
+        }
+
+        customView.configure(with: messages)
     }
 }
 
