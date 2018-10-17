@@ -14,12 +14,12 @@ extension ChatWebSocketController: StubMessageSending {
             return
         }
 
-        ChatEventRouter.route(event: .received(message: message, contact: contact))
+        MessageEventRouter.route(event: .received(message: message, contact: contact))
     }
 }
 
 extension ChatWebSocketController: StubMessageReading {
     static func read(stub message: Message, reader: String) {
-        ChatEventRouter.route(event: .otherRead(yourMessage: message, reader: reader))
+        MessageEventRouter.route(event: .otherRead(yourMessage: message, reader: reader))
     }
 }

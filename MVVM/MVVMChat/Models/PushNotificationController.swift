@@ -15,9 +15,9 @@ class PushNotificationController {
         let date = DateParser.date(from: content.subtitle) ?? Date()
         let sender: Message.Sender = .other(name: content.title)
         let pushedMessage = Message(with: sender, message: content.body, state: .sent, sendDate: date)
-        ChatEventRouter.route(event: .received(message: pushedMessage, contact: content.title))
+        MessageEventRouter.route(event: .received(message: pushedMessage, contact: content.title))
 
-        result(!ChatEventHandler.canHandleMessage(for: content.title))
+        result(!MessageEventHandler.canHandleMessage(for: content.title))
     }
 
     class func handle(response: UNNotificationResponse) {

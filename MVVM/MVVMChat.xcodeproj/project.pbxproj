@@ -20,6 +20,9 @@
 		A06C150B214A152900833E90 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C1507214A152900833E90 /* RequestHandler.swift */; };
 		A06C150C214A152900833E90 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C1508214A152900833E90 /* Request.swift */; };
 		A06C150E214A190600833E90 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C150D214A190600833E90 /* ChatTableViewCell.swift */; };
+		A0A4AC922177AEBD002B0AE4 /* MessageEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A4AC912177AEBD002B0AE4 /* MessageEvent.swift */; };
+		A0A4AC962177AF1B002B0AE4 /* MessageEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A4AC952177AF1B002B0AE4 /* MessageEventRouter.swift */; };
+		A0A4AC982177AF67002B0AE4 /* MessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A4AC972177AF67002B0AE4 /* MessageEventHandler.swift */; };
 		A0ADF285215442AD00D31AFC /* ChatListViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF284215442AD00D31AFC /* ChatListViewModelBuilder.swift */; };
 		A0ADF28721544EFC00D31AFC /* UIBarButton+BlockAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF28621544EFC00D31AFC /* UIBarButton+BlockAction.swift */; };
 		A0C8EA59214BF32D0025F31B /* CreateChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA58214BF32D0025F31B /* CreateChatViewController.swift */; };
@@ -74,6 +77,9 @@
 		A06C1507214A152900833E90 /* RequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		A06C1508214A152900833E90 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		A06C150D214A190600833E90 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		A0A4AC912177AEBD002B0AE4 /* MessageEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEvent.swift; sourceTree = "<group>"; };
+		A0A4AC952177AF1B002B0AE4 /* MessageEventRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEventRouter.swift; sourceTree = "<group>"; };
+		A0A4AC972177AF67002B0AE4 /* MessageEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEventHandler.swift; sourceTree = "<group>"; };
 		A0ADF284215442AD00D31AFC /* ChatListViewModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModelBuilder.swift; sourceTree = "<group>"; };
 		A0ADF28621544EFC00D31AFC /* UIBarButton+BlockAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButton+BlockAction.swift"; sourceTree = "<group>"; };
 		A0C8EA58214BF32D0025F31B /* CreateChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +208,26 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
+		A0A4AC932177AED8002B0AE4 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				A0C8EA962153F08F0025F31B /* ChatEvent.swift */,
+				A0C8EA982153F0D90025F31B /* ChatEventRouter.swift */,
+				A0C8EA9A215403A30025F31B /* ChatEventHandler.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		A0A4AC942177AF07002B0AE4 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				A0A4AC912177AEBD002B0AE4 /* MessageEvent.swift */,
+				A0A4AC952177AF1B002B0AE4 /* MessageEventRouter.swift */,
+				A0A4AC972177AF67002B0AE4 /* MessageEventHandler.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
 		A0C8EA5A214BF3510025F31B /* Chats */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,9 +301,8 @@
 		A0C8EA952153F0830025F31B /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				A0C8EA962153F08F0025F31B /* ChatEvent.swift */,
-				A0C8EA982153F0D90025F31B /* ChatEventRouter.swift */,
-				A0C8EA9A215403A30025F31B /* ChatEventHandler.swift */,
+				A0A4AC932177AED8002B0AE4 /* Chat */,
+				A0A4AC942177AF07002B0AE4 /* Message */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -476,6 +501,7 @@
 				A0C8EA8A2153EB040025F31B /* ChatListItemViewModel.swift in Sources */,
 				A0328B0B21551869001B8B6E /* CreateChatViewModel.swift in Sources */,
 				A0C8EA59214BF32D0025F31B /* CreateChatViewController.swift in Sources */,
+				A0A4AC922177AEBD002B0AE4 /* MessageEvent.swift in Sources */,
 				A0C8EA5D214BF3800025F31B /* CreateChatView.swift in Sources */,
 				A0C8EA942153ED640025F31B /* MessageViewModelBuilder.swift in Sources */,
 				A0DB1DFB2147680200808129 /* ChatViewController.swift in Sources */,
@@ -493,6 +519,7 @@
 				A0C8EA7D21504E600025F31B /* StubMessageSender.swift in Sources */,
 				A0C8EA922153ED410025F31B /* ChatViewModelBuilder.swift in Sources */,
 				A0C8EA7921503D900025F31B /* ConversationSimulator.swift in Sources */,
+				A0A4AC962177AF1B002B0AE4 /* MessageEventRouter.swift in Sources */,
 				A0C8EA68214D812A0025F31B /* Message.swift in Sources */,
 				A0C8EA70214F43F50025F31B /* TableViewDataDifferentiator.swift in Sources */,
 				A0C8EA64214D7FF60025F31B /* ActionButton.swift in Sources */,
@@ -507,6 +534,7 @@
 				A0C8EA8321505AC50025F31B /* ChatWebSocketController+StubMessageSending.swift in Sources */,
 				A0328B1621557C13001B8B6E /* UITableViewCell+BlockAction.swift in Sources */,
 				A0C8EA882153EAD10025F31B /* ChatListViewModel.swift in Sources */,
+				A0A4AC982177AF67002B0AE4 /* MessageEventHandler.swift in Sources */,
 				A0C8EA6C214E974E0025F31B /* DateRenderer.swift in Sources */,
 				A0C8EA66214D80AC0025F31B /* MessageTableViewCell.swift in Sources */,
 				A0C8EA9D215418FD0025F31B /* ChatEndpoint.swift in Sources */,

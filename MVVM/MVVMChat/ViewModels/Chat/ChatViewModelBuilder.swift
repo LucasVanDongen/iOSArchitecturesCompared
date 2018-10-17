@@ -37,7 +37,7 @@ class ChatViewModelBuilder {
             guard !unreadMessagesShown.isEmpty else {
                 return
             }
-            ChatEventRouter.route(event: .userRead(othersMessages: unreadMessagesShown,
+            MessageEventRouter.route(event: .userRead(othersMessages: unreadMessagesShown,
                                                    sentByContact: chat.contact))
         })
     }

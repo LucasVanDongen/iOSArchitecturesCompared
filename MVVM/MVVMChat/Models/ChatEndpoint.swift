@@ -34,10 +34,10 @@ class ChatEndpoint {
     class func send(message: String, to contact: String) {
         let previousMessages = ChatModelController.chat(for: contact)?.messages ?? []
         let newMessage = ChatModelController.create(message: message, to: contact)
-        let event = ChatEvent.sending(message: newMessage, contact: contact, previousMessages: previousMessages)
-        ChatEventRouter.route(event: event)
+        let event = MessageEvent.sending(message: newMessage, contact: contact, previousMessages: previousMessages)
+        MessageEventRouter.route(event: event)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            ChatEventRouter.route(event: .sent(message: newMessage, contact: contact))
+            MessageEventRouter.route(event: .sent(message: newMessage, contact: contact))
             ConversationSimulator.sent(message: newMessage, to: contact)
         }
     }

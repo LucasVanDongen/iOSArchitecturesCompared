@@ -43,7 +43,7 @@ class ChatViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        ChatEventHandler.add(listener: self)
+        MessageEventHandler.add(listener: self)
 
         // Start receiving fake responses through the websocket again
         ConversationSimulator.enteredChatViewController(ofConversationWith: chat.contact)
@@ -53,7 +53,7 @@ class ChatViewController: UIViewController {
         super.viewWillDisappear(animated)
 
         ChatWebSocketController.disconnectSocket(for: chat.contact)
-        ChatEventHandler.remove(listener: self)
+        MessageEventHandler.remove(listener: self)
         // Stop receiving fake responses through the websocket
         ConversationSimulator.leftChatViewController(ofConversationWith: chat.contact)
     }
