@@ -17,7 +17,7 @@ class PushNotificationController {
         let pushedMessage = Message(with: sender, message: content.body, state: .sent, sendDate: date)
         ChatEventRouter.route(event: .received(message: pushedMessage, contact: content.title))
 
-        result(ChatEventHandler.canHandleMessage(for: content.title))
+        result(!ChatEventHandler.canHandleMessage(for: content.title))
     }
 
     class func handle(response: UNNotificationResponse) {

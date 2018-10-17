@@ -18,8 +18,8 @@ class MessageBubble: UIView {
     }
 
     private enum BubbleAlignment {
-        case left
-        case right
+        case leading
+        case trailing
     }
 
     var state: State = .displaying {
@@ -49,7 +49,7 @@ class MessageBubble: UIView {
     private lazy var sent: UILabel = {
         let sent = UILabel()
         sent.font = UIFont.preferredFont(forTextStyle: .footnote)
-        sent.textAlignment = .left
+        sent.textAlignment = .natural
         sent.textColor = UIColor.lightGray
         addSubview(sent)
         return sent
@@ -58,7 +58,7 @@ class MessageBubble: UIView {
     private lazy var read: UILabel = {
         let read = UILabel()
         read.font = UIFont.preferredFont(forTextStyle: .footnote)
-        read.textAlignment = .right
+        read.textAlignment = .natural
         read.textColor = UIColor.white
         addSubview(read)
         return read
@@ -103,20 +103,20 @@ class MessageBubble: UIView {
         case .user:
             backgroundColor = UIColor.blue
             message.textColor = UIColor.white
-            alignBubble(.right)
+            alignBubble(.trailing)
         case .other:
             backgroundColor = UIColor.groupTableViewBackground
             message.textColor = UIColor.darkGray
-            alignBubble(.left)
+            alignBubble(.leading)
         }
     }
 
     private func alignBubble(_ alignment: BubbleAlignment) {
         switch alignment {
-        case .left:
+        case .leading:
             leftOffset?.constant = smallBubbleOffset
             rightOffset?.constant = -largeBubbleOffset
-        case .right:
+        case .trailing:
             leftOffset?.constant = largeBubbleOffset
             rightOffset?.constant = -smallBubbleOffset
         }
@@ -129,13 +129,13 @@ class MessageBubble: UIView {
     }
 
     private func addConstraints() {
-        message.attach(sides: [.top, .left, .right], 8)
+        message.attach(sides: [.top, .leading, .trailing], 8)
         sent
-            .attach(sides: [.left, .bottom], 8)
+            .attach(sides: [.leading, .bottom], 8)
             .space(8, .below, message)
         read
-            .attach(sides: [.bottom, .right], 8)
-            .space(2, .rightOf, sent)
+            .attach(sides: [.bottom, .trailing], 8)
+            .space(2, .trailing, sent)
             .space(8, .below, message)
             .setContentHuggingPriority(.required, for: .horizontal)
     }
@@ -143,8 +143,8 @@ class MessageBubble: UIView {
     @discardableResult
     func attach(to superview: UIView) -> UIView {
         attach(sides: [.top, .bottom], 4)
-        leftOffset = Constraint.attach(self, inside: superview, left: smallBubbleOffset).first
-        rightOffset = Constraint.attach(self, inside: superview, right: smallBubbleOffset).first
+        leftOffset = Constraint.attach(self, inside: superview, leading: smallBubbleOffset).first
+        rightOffset = Constraint.attach(self, inside: superview, trailing: smallBubbleOffset).first
         leftOffset?.isActive = true
         rightOffset?.isActive = true
         return self

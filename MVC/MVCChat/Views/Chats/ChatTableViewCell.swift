@@ -58,7 +58,7 @@ class ChatTableViewCell: UITableViewCell, IdentifiableCell {
         setup()
     }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
@@ -79,19 +79,19 @@ class ChatTableViewCell: UITableViewCell, IdentifiableCell {
 
     private func addConstraints() {
         participant
-            .attach(sides: [.top, .left], 8)
+            .attach(sides: [.top, .leading], 8)
         lastMessage
-            .attach(left: 8)
+            .attach(leading: 8)
             .space(8, .below, participant)
         lastMessageDate
-            .attach(sides: [.left, .bottom], 8)
+            .attach(sides: [.leading, .bottom], 8)
             .space(8, .below, lastMessage)
-            .align(.right, to: lastMessage)
-            .align(.right, to: participant)
+            .align(.trailing, to: lastMessage)
+            .align(.trailing, to: participant)
         unreadMessageCounter
-            .attach(right: 8)
+            .attach(trailing: 8)
             .center(axis: .y)
-            .space(8, .rightOf, lastMessageDate)
+            .space(8, .trailing, lastMessageDate)
             .ratio(of: 1, to: 1, .orMore)
             .height(unreadMessageCounter.font.lineHeight)
             .setContentHuggingPriority(.required, for: .horizontal)

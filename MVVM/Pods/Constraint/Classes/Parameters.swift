@@ -11,9 +11,9 @@ import UIKit
 public enum LayoutGuide {
     case none
     case top
-    case left
+    case leading
     case bottom
-    case right
+    case trailing
     case horizontal
     case vertical
     case all
@@ -120,41 +120,41 @@ public struct Offset: Offsetable {
 
 public enum SpaceDirection {
     case below
-    case rightOf
+    case trailing
     case above
-    case leftOf
+    case leading
 
-    var spacedViewAttribute: NSLayoutAttribute {
+    var spacedViewAttribute: NSLayoutConstraint.Attribute {
         switch self {
         case .below: return .top
-        case .rightOf: return .left
+        case .leading: return .leading
         case .above: return .bottom
-        case .leftOf: return .right
+        case .trailing: return .trailing
         }
     }
 
-    var otherViewAttribute: NSLayoutAttribute {
+    var otherViewAttribute: NSLayoutConstraint.Attribute {
         switch self {
         case .below: return .bottom
-        case .rightOf: return .right
+        case .trailing: return .trailing
         case .above: return .top
-        case .leftOf: return .left
+        case .leading: return .leading
         }
     }
 
     var side: Side {
         switch self {
         case .above: return .top
-        case .leftOf: return .left
+        case .leading: return .leading
         case .below: return .bottom
-        case .rightOf: return .right
+        case .trailing: return .trailing
         }
     }
 
     var layoutDirection: LayoutDirection {
         switch self {
         case .above, .below: return .vertically
-        case .leftOf, .rightOf: return .horizontally
+        case .leading, .trailing: return .horizontally
         }
     }
 }
@@ -173,7 +173,7 @@ public enum AlignmentType {
     case verticalCenters
     case baselines
 
-    var attribute: NSLayoutAttribute {
+    var attribute: NSLayoutConstraint.Attribute {
         switch self {
         case .leadingEdges: return .leading
         case .trailingEdges: return .trailing
@@ -191,7 +191,7 @@ public enum CenterAxis {
     case y
     case both
 
-    var attributes: [NSLayoutAttribute] {
+    var attributes: [NSLayoutConstraint.Attribute] {
         switch self {
         case .x: return [.centerX]
         case .y: return [.centerY]
@@ -202,45 +202,45 @@ public enum CenterAxis {
 
 public enum Side {
     case top
-    case left
+    case leading
     case bottom
-    case right
+    case trailing
 
-    var attributes: (inAttribute: NSLayoutAttribute, outAttribute: NSLayoutAttribute) {
+    var attributes: (inAttribute: NSLayoutConstraint.Attribute, outAttribute: NSLayoutConstraint.Attribute) {
         switch self {
         case .top:
             return (.top, .bottom)
-        case .left:
-            return (.left, .bottom)
+        case .leading:
+            return (.leading, .bottom)
         case .bottom:
             return (.bottom, .top)
-        case .right:
-            return (.right, .left)
+        case .trailing:
+            return (.trailing, .leading)
         }
     }
 
-    var attribute: NSLayoutAttribute {
+    var attribute: NSLayoutConstraint.Attribute {
         switch self {
         case .top: return .top
-        case .left: return .left
+        case .leading: return .leading
         case .bottom: return .bottom
-        case .right: return .right
+        case .trailing: return .trailing
         }
     }
 
     var spaceDirection: SpaceDirection {
         switch self {
         case .top: return .above
-        case .left: return .leftOf
+        case .leading: return .leading
         case .bottom: return .below
-        case .right: return .rightOf
+        case .trailing: return .trailing
         }
     }
 
     var layoutDirection: LayoutDirection {
         switch self {
         case .bottom, .top: return .vertically
-        case .left, .right: return .horizontally
+        case .leading, .trailing: return .horizontally
         }
     }
 }
@@ -250,7 +250,7 @@ public enum Relation {
     case orLess
     case orMore
 
-    var layoutRelation: NSLayoutRelation {
+    var layoutRelation: NSLayoutConstraint.Relation {
         switch self {
         case .exactly:
             return .equal
@@ -261,7 +261,7 @@ public enum Relation {
         }
     }
 
-    var reversedLayoutRelation: NSLayoutRelation {
+    var reversedLayoutRelation: NSLayoutConstraint.Relation {
         switch self {
         case .exactly:
             return .equal

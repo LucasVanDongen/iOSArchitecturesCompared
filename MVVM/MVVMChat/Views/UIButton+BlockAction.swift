@@ -20,7 +20,7 @@ private class ButtonActionBlockWrapper: NSObject {
 
 extension UIButton {
 
-    public func action(for controlEvent: UIControlEvents, block: @escaping (UIButton) -> Void) {
+    public func action(for controlEvent: UIControl.Event, block: @escaping (UIButton) -> Void) {
         objc_setAssociatedObject(self,
                                  &actionBlockKey,
                                  ButtonActionBlockWrapper(block: block),

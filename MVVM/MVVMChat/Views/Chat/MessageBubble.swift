@@ -115,13 +115,13 @@ class MessageBubble: UIView {
     }
 
     private func addConstraints() {
-        message.attach(sides: [.top, .left, .right], 8)
+        message.attach(sides: [.top, .leading, .trailing], 8)
         sent
-            .attach(sides: [.left, .bottom], 8)
+            .attach(sides: [.leading, .bottom], 8)
             .space(8, .below, message)
         read
-            .attach(sides: [.bottom, .right], 8)
-            .space(2, .rightOf, sent)
+            .attach(sides: [.bottom, .trailing], 8)
+            .space(2, .trailing, sent)
             .space(8, .below, message)
             .setContentHuggingPriority(.required, for: .horizontal)
     }
@@ -129,8 +129,8 @@ class MessageBubble: UIView {
     @discardableResult
     func attach(to superview: UIView) -> UIView {
         attach(sides: [.top, .bottom], 4)
-        leftOffset = Constraint.attach(self, inside: superview, left: smallBubbleOffset).first
-        rightOffset = Constraint.attach(self, inside: superview, right: smallBubbleOffset).first
+        leftOffset = Constraint.attach(self, inside: superview, leading: smallBubbleOffset).first
+        rightOffset = Constraint.attach(self, inside: superview, trailing: smallBubbleOffset).first
         leftOffset?.isActive = true
         rightOffset?.isActive = true
         return self

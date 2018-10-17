@@ -13,9 +13,9 @@ Usually you will use the `Constraint` library on an instance of the (descendant 
 ```swift    
 icon
     .attach(top: 20,
-            left: 10,
+            leading: 10,
             bottom: 0,
-            right: 10)
+            trailing: 10)
     .size(width: 24, height: 24)
 ```
 
@@ -73,15 +73,15 @@ view.attach(offset: 12)
 This version lets you specify which sides are going to be attached. You can define an `offset` or accept the default of `0`:
 
 ```swift
-view.attach(sides: [.top, .left, .right], 12)
+view.attach(sides: [.top, .leading, .trailing], 12)
 ```
 #### Attach with different values per side
 This is the most flexible way to use this API. Every side can have it's own separate definition which is `Offsetable` so can be mutated further when needed.
 
 ```swift
-view.attach(top: 0, right: 12) // Does not apply the bottom and left constraints
+view.attach(top: 0, trailing: 12) // Does not apply the bottom and leading constraints
 view.attach(top: 0.orMore) // It's possible to use it with primitives and still modify the priority or relation type
-view.attach(left: 12.orLess.defaultLowPriority) // These can also be chained
+view.attach(leading: 12.orLess.defaultLowPriority) // These can also be chained
 view.attach(bottom: Offset(0, .orMore, respectingLayoutGuide: true, priority: .defaultLow)) // Means the same as view.attach(bottom: 0.orMore.layoutGuideRespecting.defaultLowPriority)
 ```
 `respectingLayoutGuide` / `layoutGuideRespecting` means it respects the layout guides, like in the root view of a `ViewController` where you expect it to respect the Safe Area sometimes. 
@@ -107,13 +107,13 @@ view.align(axis: .x, to: anotherView, adjustment: 10) // Wants to center it's X 
 It also allows you to align a side instead of the middle:
 
 ```swift
-view.align(.left, 12, otherView) // Aligns it's left side to the left side of otherView + 12 pixels
+view.align(.leading, 12, otherView) // Aligns it's leading side to the leading side of otherView + 12 pixels
 ```
 
 If you want to align multiple sides (much like `attach` does) you can do this too:
 
 ```swift
-view.align([.top, .left, .bottom], 0, to: otherView)
+view.align([.top, .leading, .bottom], 0, to: otherView)
 ```
 
 ### `space`

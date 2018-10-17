@@ -122,7 +122,7 @@ class ChatView: UIView {
     }()
 
     private lazy var spinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        let spinner = UIActivityIndicatorView(style: .white)
         spinner.hidesWhenStopped = true
         addSubview(spinner)
         return spinner
@@ -179,7 +179,7 @@ class ChatView: UIView {
 
     private func loadChangedData<T: Differentiable>(between previousValues: [T], and newValues: [T], animated: Bool) {
         let changedValues = TableViewDataDifferentiator.differentiate(oldValues: previousValues, with: newValues)
-        let animation: UITableViewRowAnimation = animated ? .automatic : .none
+        let animation: UITableView.RowAnimation = animated ? .automatic : .none
 
         if !animated {
             UIView.setAnimationsEnabled(false)
@@ -229,23 +229,23 @@ class ChatView: UIView {
 
     private func addConstraints() {
         messageList
-            .attach(sides: [.left, .right], respectingLayoutGuides: true)
+            .attach(sides: [.leading, .trailing], respectingLayoutGuides: true)
             .attach(top: 0)
         newMessageBlock
-            .attach(sides: [.left, .right])
+            .attach(sides: [.leading, .trailing])
             .space(0, .below, messageList)
             .height(46)
         error
-            .attach(sides: [.left, .right], 8)
+            .attach(sides: [.leading, .trailing], 8)
             .space(8, .above, newMessageBlock)
-        message.attach(sides: [.top, .left, .bottom], 8)
+        message.attach(sides: [.top, .leading, .bottom], 8)
         sendMessage
-            .attach(sides: [.top, .bottom, .right], 3)
-            .space(2, .rightOf, message)
+            .attach(sides: [.top, .bottom, .trailing], 3)
+            .space(2, .trailing, message)
             .setContentHuggingPriority(.required, for: .horizontal)
         spinner.align(axis: .both, to: sendMessage)
 
-        keyboardShowsConstraint = Constraint.attach(newMessageBlock, inside: self,
+        keyboardShowsConstraint = Constraint.attach(newMessageBlock, inside: self, leading: nil,
                                                     bottom: 0.layoutGuideRespecting).first
         keyboardShowsConstraint?.isActive = true
     }
@@ -259,22 +259,22 @@ extension ChatView {
     private func addKeyboardListener() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(changeKeyboard(notification:)),
-                                               name: .UIKeyboardWillShow, object: nil)
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(changeKeyboard(notification:)),
-                                               name: .UIKeyboardWillHide, object: nil)
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     @objc
     private func changeKeyboard(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
-            let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval,
-            let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
+            let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
                 return assertionFailure("Could not extract all needed information from the NSNotification")
         }
 
-        let curveUintValue = UInt(UIViewAnimationCurve.easeInOut.rawValue)
-        let animationOptions: UIViewAnimationOptions = [UIViewAnimationOptions(rawValue: curveUintValue)]
+        let curveUintValue = UInt(UIView.AnimationCurve.easeInOut.rawValue)
+        let animationOptions: UIView.AnimationOptions = [UIView.AnimationOptions(rawValue: curveUintValue)]
         let constant = -((UIApplication.shared.keyWindow?.frame.size.height ?? 0) - keyboardSize.origin.y)
         keyboardShowsConstraint?.constant = constant
 

@@ -20,7 +20,6 @@
 		A06C150B214A152900833E90 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C1507214A152900833E90 /* RequestHandler.swift */; };
 		A06C150C214A152900833E90 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C1508214A152900833E90 /* Request.swift */; };
 		A06C150E214A190600833E90 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C150D214A190600833E90 /* ChatTableViewCell.swift */; };
-		A0ADF28321543FDD00D31AFC /* ApplicationBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF28221543FDD00D31AFC /* ApplicationBadge.swift */; };
 		A0ADF285215442AD00D31AFC /* ChatListViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF284215442AD00D31AFC /* ChatListViewModelBuilder.swift */; };
 		A0ADF28721544EFC00D31AFC /* UIBarButton+BlockAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF28621544EFC00D31AFC /* UIBarButton+BlockAction.swift */; };
 		A0C8EA59214BF32D0025F31B /* CreateChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA58214BF32D0025F31B /* CreateChatViewController.swift */; };
@@ -75,7 +74,6 @@
 		A06C1507214A152900833E90 /* RequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		A06C1508214A152900833E90 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		A06C150D214A190600833E90 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
-		A0ADF28221543FDD00D31AFC /* ApplicationBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationBadge.swift; sourceTree = "<group>"; };
 		A0ADF284215442AD00D31AFC /* ChatListViewModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModelBuilder.swift; sourceTree = "<group>"; };
 		A0ADF28621544EFC00D31AFC /* UIBarButton+BlockAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButton+BlockAction.swift"; sourceTree = "<group>"; };
 		A0C8EA58214BF32D0025F31B /* CreateChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatViewController.swift; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 				A0C8EA60214D61210025F31B /* Chat */,
 				A0C8EA6B214E974E0025F31B /* DateRenderer.swift */,
 				A0C8EA6F214F43F50025F31B /* TableViewDataDifferentiator.swift */,
-				A0ADF28221543FDD00D31AFC /* ApplicationBadge.swift */,
 				A0328B05215516D2001B8B6E /* UIButton+BlockAction.swift */,
 				A0ADF28621544EFC00D31AFC /* UIBarButton+BlockAction.swift */,
 				A0328B07215516EE001B8B6E /* UITextField+BlockAction.swift */,
@@ -366,6 +363,7 @@
 				TargetAttributes = {
 					A0DB1DE4214767D800808129 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -514,7 +512,6 @@
 				A0C8EA9D215418FD0025F31B /* ChatEndpoint.swift in Sources */,
 				A0C8EA8F2153EBD60025F31B /* MessageViewModel.swift in Sources */,
 				A06C150B214A152900833E90 /* RequestHandler.swift in Sources */,
-				A0ADF28321543FDD00D31AFC /* ApplicationBadge.swift in Sources */,
 				A0C8EA5F214C64830025F31B /* BaseAccessoryView.swift in Sources */,
 				A0DB1DE9214767D800808129 /* AppDelegate.swift in Sources */,
 				A06C150E214A190600833E90 /* ChatTableViewCell.swift in Sources */,
@@ -675,7 +672,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.departamento-b.MVVMChat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -694,7 +691,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.departamento-b.MVVMChat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

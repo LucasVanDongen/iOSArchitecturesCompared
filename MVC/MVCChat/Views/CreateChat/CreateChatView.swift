@@ -93,7 +93,7 @@ class CreateChatView: UIView {
     }()
 
     private lazy var spinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
         spinner.hidesWhenStopped = true
         addSubview(spinner)
         return spinner
@@ -125,16 +125,16 @@ class CreateChatView: UIView {
     }
 
     private func addConstraints() {
-        introduction.attach(sides: [.top, .left, .right], 8, respectingLayoutGuides: true)
+        introduction.attach(sides: [.top, .leading, .trailing], 8, respectingLayoutGuides: true)
         contact
-            .attach(sides: [.left, .right], 8)
+            .attach(sides: [.leading, .trailing], 8)
             .space(8, .below, introduction)
         spinner.center()
         error
-            .attach(sides: [.left, .right], 8)
+            .attach(sides: [.leading, .trailing], 8)
             .space(8, .below, contact)
 
-        create.attach(sides: [.top, .bottom, .right], 3)
+        create.attach(sides: [.top, .bottom, .trailing], 3)
     }
 
     @objc

@@ -27,12 +27,22 @@ extension Constraint {
             return true
         }
 
+        // Hack
+        if view is UICollectionViewCell {
+            return true
+        }
+
         guard let superview = view.superview else {
             return true
         }
 
         let superviewClassString = String(describing: type(of: superview))
         let superviewIsExcluded = excludedParentViewClasses.contains(superviewClassString)
+
+        // Hack
+        if superview is UICollectionViewCell {
+            return true
+        }
 
         return superviewIsExcluded
     }

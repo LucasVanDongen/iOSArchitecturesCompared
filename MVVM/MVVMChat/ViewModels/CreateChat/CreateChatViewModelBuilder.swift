@@ -10,15 +10,12 @@ import UIKit
 
 class CreateChatViewModelBuilder {
     static func build(isSending: Bool, error: String?) -> CreateChatViewModel {
-        guard !isSending else {
-            return CreateChatViewModel(state: .creating, create: { _ in })
-        }
-
-        if let error = error {
-            return CreateChatViewModel(state: .failed(reason: error), create: create)
-        }
-
-        return CreateChatViewModel(state: .empty, create: create)
+        let create = isSending ? { _ in } : self.create
+        return CreateChatViewModel(hideError: error == nil,
+                                   enableCreate: !isSending,
+                                   showSpinner: isSending,
+                                   error: error ?? "",
+                                   create: create)
     }
 
     private static func create(with contact: String) {

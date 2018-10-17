@@ -9,12 +9,9 @@
 import UIKit
 
 struct CreateChatViewModel {
-    enum State {
-        case empty
-        case creating
-        case failed(reason: String)
-    }
-
-    let state: State
+    let hideError: Bool
+    let enableCreate: Bool
+    let showSpinner: Bool
+    let error: String
     let create: (String) -> Void
 }

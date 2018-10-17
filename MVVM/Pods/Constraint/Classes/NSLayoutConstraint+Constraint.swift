@@ -8,8 +8,13 @@
 import UIKit
 
 extension NSLayoutConstraint {
-    var activated: NSLayoutConstraint {
+    public var activated: NSLayoutConstraint {
         isActive = true
+        return self
+    }
+
+    public var deactivated: NSLayoutConstraint {
+        isActive = false
         return self
     }
 }

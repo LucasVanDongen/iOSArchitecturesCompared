@@ -6,7 +6,7 @@ workspace 'MVVMChat'
 
 def base_pods
     pod 'SwiftLint'
-    pod 'R.swift'
+    pod 'R.swift', '~> 5.0.0.alpha.2'
     pod 'Constraint'
 end
 

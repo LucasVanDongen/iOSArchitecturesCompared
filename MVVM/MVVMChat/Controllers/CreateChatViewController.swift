@@ -24,6 +24,7 @@ class CreateChatViewController: UIViewController {
 
         title = "Create Chat"
 
+        //customView.display(viewModel: CreateChatViewModelBuilder.build(isSending: false, error: nil))
         ChatEventHandler.add(listener: self)
     }
 

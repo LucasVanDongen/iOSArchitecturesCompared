@@ -10,37 +10,6 @@ import UIKit
 
 class CreateChatView: UIView {
 
-    var state: CreateChatViewModel.State = .empty {
-        didSet {
-            let hideError: Bool
-            let enableCreate: Bool
-            let showSpinner: Bool
-
-            switch state {
-            case .empty:
-                hideError = true
-                enableCreate = true
-                showSpinner = false
-            case .creating:
-                hideError = true
-                enableCreate = false
-                showSpinner = true
-            case .failed(let error):
-                hideError = false
-                enableCreate = true
-                showSpinner = false
-                self.error.text = error
-            }
-
-            error.isHidden = hideError
-            create.isEnabled = enableCreate
-            switch showSpinner {
-            case true: spinner.startAnimating()
-            case false: spinner.stopAnimating()
-            }
-        }
-    }
-
     private lazy var introduction: UILabel = {
         let introduction = UILabel()
         introduction.text = "Enter the name of the contact you want to start a new chat with:"
@@ -80,7 +49,7 @@ class CreateChatView: UIView {
     }()
 
     private lazy var spinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let spinner = UIActivityIndicatorView(style: .gray)
         spinner.hidesWhenStopped = true
         addSubview(spinner)
         return spinner
@@ -112,25 +81,35 @@ class CreateChatView: UIView {
         contact.returnAction { contact in
             viewModel.create(contact.text ?? "")
         }
-
-        state = viewModel.state
+        error.isHidden = viewModel.hideError
+        create.isEnabled = viewModel.enableCreate
+        switch viewModel.showSpinner {
+        case true: spinner.startAnimating()
+        case false: spinner.stopAnimating()
+        }
     }
 
     private func setup() {
         addConstraints()
+        create.addTarget(self, action: #selector(test), for: .touchUpInside)
         backgroundColor = UIColor.white
     }
 
+    @objc
+    private func test() {
+        print("bla")
+    }
+
     private func addConstraints() {
-        introduction.attach(sides: [.top, .left, .right], 8, respectingLayoutGuides: true)
+        introduction.attach(sides: [.top, .leading, .trailing], 8, respectingLayoutGuides: true)
         contact
-            .attach(sides: [.left, .right], 8)
+            .attach(sides: [.leading, .trailing], 8)
             .space(8, .below, introduction)
         spinner.center()
         error
-            .attach(sides: [.left, .right], 8)
+            .attach(sides: [.leading, .trailing], 8)
             .space(8, .below, contact)
 
-        create.attach(sides: [.top, .bottom, .right], 3)
+        create.attach(sides: [.top, .bottom, .trailing], 3)
     }
 }

@@ -50,7 +50,8 @@ class PushNotificationController {
     }
 
     private static func chatViewController(handling contact: String) -> ChatViewController? {
-        guard let lastViewController = BaseNavigationViewController.navigationController?.viewControllers.last as? ChatViewController,
+        guard let lastViewController = BaseNavigationViewController.navigationController?.viewControllers.last
+            as? ChatViewController,
             lastViewController.chat.contact == contact else {
                 return nil
         }
