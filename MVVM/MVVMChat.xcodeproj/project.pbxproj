@@ -23,6 +23,7 @@
 		A0A4AC922177AEBD002B0AE4 /* MessageEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A4AC912177AEBD002B0AE4 /* MessageEvent.swift */; };
 		A0A4AC962177AF1B002B0AE4 /* MessageEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A4AC952177AF1B002B0AE4 /* MessageEventRouter.swift */; };
 		A0A4AC982177AF67002B0AE4 /* MessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A4AC972177AF67002B0AE4 /* MessageEventHandler.swift */; };
+		A0A4AC9A2179060B002B0AE4 /* ChatListItemViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A4AC992179060B002B0AE4 /* ChatListItemViewModelBuilder.swift */; };
 		A0ADF285215442AD00D31AFC /* ChatListViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF284215442AD00D31AFC /* ChatListViewModelBuilder.swift */; };
 		A0ADF28721544EFC00D31AFC /* UIBarButton+BlockAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF28621544EFC00D31AFC /* UIBarButton+BlockAction.swift */; };
 		A0C8EA59214BF32D0025F31B /* CreateChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA58214BF32D0025F31B /* CreateChatViewController.swift */; };
@@ -80,6 +81,7 @@
 		A0A4AC912177AEBD002B0AE4 /* MessageEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEvent.swift; sourceTree = "<group>"; };
 		A0A4AC952177AF1B002B0AE4 /* MessageEventRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEventRouter.swift; sourceTree = "<group>"; };
 		A0A4AC972177AF67002B0AE4 /* MessageEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEventHandler.swift; sourceTree = "<group>"; };
+		A0A4AC992179060B002B0AE4 /* ChatListItemViewModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListItemViewModelBuilder.swift; sourceTree = "<group>"; };
 		A0ADF284215442AD00D31AFC /* ChatListViewModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModelBuilder.swift; sourceTree = "<group>"; };
 		A0ADF28621544EFC00D31AFC /* UIBarButton+BlockAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButton+BlockAction.swift"; sourceTree = "<group>"; };
 		A0C8EA58214BF32D0025F31B /* CreateChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatViewController.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				A0C8EA872153EAD10025F31B /* ChatListViewModel.swift */,
 				A0C8EA892153EB040025F31B /* ChatListItemViewModel.swift */,
 				A0ADF284215442AD00D31AFC /* ChatListViewModelBuilder.swift */,
+				A0A4AC992179060B002B0AE4 /* ChatListItemViewModelBuilder.swift */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				A0C8EA942153ED640025F31B /* MessageViewModelBuilder.swift in Sources */,
 				A0DB1DFB2147680200808129 /* ChatViewController.swift in Sources */,
 				A0328B0D215518EA001B8B6E /* CreateChatViewModelBuilder.swift in Sources */,
+				A0A4AC9A2179060B002B0AE4 /* ChatListItemViewModelBuilder.swift in Sources */,
 				A0C8EA62214D612E0025F31B /* ChatView.swift in Sources */,
 				A0C8EA7B21503E2D0025F31B /* SimulatedConversation.swift in Sources */,
 				A0C8EA762150392F0025F31B /* ChatWebSocketController.swift in Sources */,
