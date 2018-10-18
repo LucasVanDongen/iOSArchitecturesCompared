@@ -139,7 +139,6 @@ class MessageEventHandler {
     }
 
     private class func updateApplicationBadge() {
-        print("Application badge updated to \(ChatModelController.unreadMessageCount())")
         UIApplication.shared.applicationIconBadgeNumber = ChatModelController.unreadMessageCount()
     }
 

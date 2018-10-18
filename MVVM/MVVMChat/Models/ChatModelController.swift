@@ -19,7 +19,6 @@ class ChatModelController {
     }
 
     class func create(message: String, to contact: String) -> Message {
-        print("adding message \(message) to \(contact)")
         let chat: Chat
         if let foundChat = loadedChats.first(where: { $0.contact == contact }) {
             chat = foundChat
@@ -43,7 +42,6 @@ class ChatModelController {
 
     class func received(message: Message, by contact: String) {
         let chat: Chat
-        print("received message \(message.message) by \(contact)")
         if let foundChat = loadedChats.first(where: { (chat) -> Bool in
             chat.contact == contact
         }) {

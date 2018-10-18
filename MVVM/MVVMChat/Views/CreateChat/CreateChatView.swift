@@ -91,13 +91,7 @@ class CreateChatView: UIView {
 
     private func setup() {
         addConstraints()
-        create.addTarget(self, action: #selector(test), for: .touchUpInside)
         backgroundColor = UIColor.white
-    }
-
-    @objc
-    private func test() {
-        print("bla")
     }
 
     private func addConstraints() {
