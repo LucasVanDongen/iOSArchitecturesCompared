@@ -47,10 +47,14 @@ class ChatViewModelBuilder {
     }
 
     class func afterShowingMessages(for contact: String) {
-        MessageEventRouter.route(event: .userRead(messagesSentBy: contact))
+        DispatchQueue.global().async {
+            MessageEventRouter.route(event: .userRead(messagesSentBy: contact))
+        }
     }
 
     class func send(message: String, to contact: String) {
-        ChatEndpoint.send(message: message, to: contact)
+        DispatchQueue.global().async {
+            ChatEndpoint.send(message: message, to: contact)
+        }
     }
 }

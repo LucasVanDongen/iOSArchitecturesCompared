@@ -23,7 +23,11 @@ class ChatListItemViewModelBuilder {
     }
 
     private class func show(chat: Chat) {
-        let chatViewController = ChatViewController(for: chat)
-        BaseNavigationViewController.pushViewController(chatViewController, animated: true)
+        DispatchQueue.global().async {
+            let chatViewController = ChatViewController(for: chat)
+            DispatchQueue.main.async {
+                BaseNavigationViewController.pushViewController(chatViewController, animated: true)
+            }
+        }
     }
 }

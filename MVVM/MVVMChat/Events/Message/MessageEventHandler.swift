@@ -39,8 +39,10 @@ class MessageEventHandler {
 
     class func received(message: Message, by contact: String, previousMessages: [Message]) {
         let listenersHandlingMessage = chatListening.filter { $0?.handles(chatWith: contact) ?? false }
-        updateApplicationBadge()
-        ChatEventHandler.updateAllChatLists()
+        DispatchQueue.main.async {
+            updateApplicationBadge()
+            ChatEventHandler.updateAllChatLists()
+        }
 
         guard !listenersHandlingMessage.isEmpty else {
             return
@@ -54,8 +56,9 @@ class MessageEventHandler {
                                                        isSending: false,
                                                        isFirstLoad: false,
                                                        previousMessages: previousMessages)
-        listenersHandlingMessage.forEach { $0?.updated(chat: chatViewModel) }
-        updateApplicationBadge()
+        DispatchQueue.main.async {
+            listenersHandlingMessage.forEach { $0?.updated(chat: chatViewModel) }
+        }
     }
 
     class func sending(message: Message, to contact: String, previousMessages: [Message]) {
@@ -64,11 +67,12 @@ class MessageEventHandler {
             return
         }
 
-        if updateListenersHandlingMessage(for: chat, previousMessages: previousMessages, isSending: true) {
-            return
+        DispatchQueue.main.async {
+            if updateListenersHandlingMessage(for: chat, previousMessages: previousMessages, isSending: true) {
+                return
+            }
+            ChatEventHandler.updateAllChatLists()
         }
-
-        ChatEventHandler.updateAllChatLists()
     }
 
     class func sent(message: Message, to contact: String) {
@@ -77,8 +81,10 @@ class MessageEventHandler {
             return
         }
 
-        updateListenersHandlingMessage(for: chat, previousMessages: chat.messages, isSending: false)
-        ChatEventHandler.updateAllChatLists()
+        DispatchQueue.main.async {
+            updateListenersHandlingMessage(for: chat, previousMessages: chat.messages, isSending: false)
+            ChatEventHandler.updateAllChatLists()
+        }
     }
 
     class func failedSending(message: Message, to contact: String, reason: String) {
@@ -91,8 +97,11 @@ class MessageEventHandler {
                                                          isSending: false,
                                                          isFirstLoad: false,
                                                          error: reason)
-        for case let listener in chatListening where listener?.handles(chatWith: chat.contact) ?? false {
-            listener?.updated(chat: failedViewModel)
+
+        DispatchQueue.main.async {
+            for case let listener in chatListening where listener?.handles(chatWith: chat.contact) ?? false {
+                listener?.updated(chat: failedViewModel)
+            }
         }
     }
 
@@ -102,9 +111,11 @@ class MessageEventHandler {
             return
         }
 
-        updateListenersHandlingMessage(for: chat, isSending: false)
-        ChatEventHandler.updateAllChatLists()
-        updateApplicationBadge()
+        DispatchQueue.main.async {
+            updateListenersHandlingMessage(for: chat, isSending: false)
+            ChatEventHandler.updateAllChatLists()
+            updateApplicationBadge()
+        }
     }
 
     class func read(yourMessage: Message, by contact: String) {
@@ -113,7 +124,9 @@ class MessageEventHandler {
             return
         }
 
-        updateListenersHandlingMessage(for: chat, isSending: false)
+        DispatchQueue.main.async {
+            updateListenersHandlingMessage(for: chat, isSending: false)
+        }
     }
 
     class func canHandleMessage(for contact: String) -> Bool {

@@ -24,8 +24,10 @@ class ChatsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ChatEventHandler.add(listener: self)
-        ChatEventRouter.route(event: .applicationInitialized)
         title = "Chats"
+        DispatchQueue.global().async {
+            ChatEventRouter.route(event: .applicationInitialized)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

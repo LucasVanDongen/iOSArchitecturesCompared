@@ -27,7 +27,11 @@ class ChatListViewModelBuilder {
     }
 
     private class func addChat() {
-        let createChatViewController = CreateChatViewController()
-        BaseNavigationViewController.pushViewController(createChatViewController, animated: true)
+        DispatchQueue.global().async {
+            let createChatViewController = CreateChatViewController()
+            DispatchQueue.main.async {
+                BaseNavigationViewController.pushViewController(createChatViewController, animated: true)
+            }
+        }
     }
 }

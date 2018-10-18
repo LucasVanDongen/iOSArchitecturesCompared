@@ -19,11 +19,13 @@ class CreateChatViewModelBuilder {
     }
 
     private static func create(with contact: String) {
-        guard contact != "" else {
-            ChatEventRouter.route(event: .createChatFailed(reason: "Please provide a contact name"))
-            return
-        }
+        DispatchQueue.global().async {
+            guard contact != "" else {
+                ChatEventRouter.route(event: .createChatFailed(reason: "Please provide a contact name"))
+                return
+            }
 
-        ChatEventRouter.route(event: .creatingChat(contact: contact))
+            ChatEventRouter.route(event: .creatingChat(contact: contact))
+        }
     }
 }

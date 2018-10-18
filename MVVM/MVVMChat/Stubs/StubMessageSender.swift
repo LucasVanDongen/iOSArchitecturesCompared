@@ -58,7 +58,7 @@ class StubMessageSender: NSObject {
     private class func read(message: Message, of simulatedConversation: SimulatedConversation,
                             whenDone finished: (() -> Void)? = nil) {
         let readDelay = Double(arc4random_uniform(4)) + 1.5
-        DispatchQueue.main.asyncAfter(deadline: .now() + readDelay) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + readDelay) {
             switch simulatedConversation.state {
             case .webSocket:
                 ChatWebSocketController.read(stub: message, reader: simulatedConversation.contact)
@@ -81,7 +81,7 @@ class StubMessageSender: NSObject {
         let responseDelay = Double(arc4random_uniform(10)) + 5.0
         let again = responsesGiven == 0 ? "" : "again "
         print("🤖: \(simulatedConversation.contact) will send an automated response \(again)in \(responseDelay)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + responseDelay) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + responseDelay) {
             let message = Message(with: .other(name: simulatedConversation.contact),
                                   message: response(for: responsesGiven), state: .sent, sendDate: Date())
 

@@ -40,35 +40,46 @@ class ChatEventHandler {
     }
 
     class func started() {
-        ChatEndpoint.fetchChats()
-        let loadingViewModel = ChatListViewModelBuilder.buildLoading()
-        chatListListening.forEach { $0?.updated(list: loadingViewModel) }
+        DispatchQueue.global().async {
+            ChatEndpoint.fetchChats()
+            let loadingViewModel = ChatListViewModelBuilder.buildLoading()
+            DispatchQueue.main.async {
+                chatListListening.forEach { $0?.updated(list: loadingViewModel) }
+            }
+        }
     }
 
     class func loaded(chats: [Chat]) {
         let chatList = ChatListViewModelBuilder.build(for: chats)
-        chatListListening.forEach { $0?.updated(list: chatList) }
+        DispatchQueue.main.async {
+            chatListListening.forEach { $0?.updated(list: chatList) }
+        }
     }
 
     class func creatingChat() {
         let createChat = CreateChatViewModelBuilder.build(isSending: true, error: nil)
-        createChatListening.forEach { $0?.updated(create: createChat) }
+        DispatchQueue.main.async {
+            createChatListening.forEach { $0?.updated(create: createChat) }
+        }
     }
 
     class func failedCreatingChat(reason: String) {
         let createChat = CreateChatViewModelBuilder.build(isSending: false, error: reason)
-        createChatListening.forEach { $0?.updated(create: createChat) }
+        DispatchQueue.main.async {
+            createChatListening.forEach { $0?.updated(create: createChat) }
+        }
     }
 
     class func created(chat: Chat) {
         let createChat = CreateChatViewModelBuilder.build(isSending: false, error: nil)
-        createChatListening.forEach { $0?.updated(create: createChat) }
-        updateAllChatLists()
-
         let chatViewController = ChatViewController(for: chat)
-        BaseNavigationViewController.pushViewController(chatViewController,
-                                                        animated: true,
-                                                        removePreviousFromStack: true)
+        DispatchQueue.main.async {
+            createChatListening.forEach { $0?.updated(create: createChat) }
+            updateAllChatLists()
+            BaseNavigationViewController.pushViewController(chatViewController,
+                                                            animated: true,
+                                                            removePreviousFromStack: true)
+        }
     }
 
     class func updateAllChatLists() {
