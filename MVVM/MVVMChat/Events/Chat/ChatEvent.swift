@@ -9,10 +9,9 @@
 import UIKit
 
 enum ChatEvent {
-    case started
+    case applicationInitialized
     case loaded(chats: [Chat])
-
-    case creating(chat: Chat)
+    case creatingChat(contact: String)
     case created(chat: Chat)
     case createChatFailed(reason: String)
 }

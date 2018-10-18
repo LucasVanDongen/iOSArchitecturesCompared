@@ -11,11 +11,13 @@ import UIKit
 class ChatEventRouter {
     static func route(event: ChatEvent) {
         switch event {
-        case .started:
+        case .applicationInitialized:
             ChatEventHandler.started()
         case .loaded(let chats):
             ChatEventHandler.loaded(chats: chats)
-        case .creating:
+        case .creatingChat(let contact):
+            let chat = ChatModelController.create(chatWith: contact)
+            ChatEndpoint.create(chat: chat)
             ChatEventHandler.creatingChat()
         case .created(let chat):
             ChatEventHandler.created(chat: chat)

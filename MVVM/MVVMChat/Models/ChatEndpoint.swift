@@ -23,9 +23,7 @@ class ChatEndpoint {
         }
     }
 
-    static func create(chatWith contact: String) {
-        let chat = ChatModelController.create(chatWith: contact)
-        ChatEventRouter.route(event: .creating(chat: chat))
+    static func create(chat: Chat) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             ChatEventRouter.route(event: .created(chat: chat))
         }

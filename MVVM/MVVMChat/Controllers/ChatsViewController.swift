@@ -24,7 +24,7 @@ class ChatsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ChatEventHandler.add(listener: self)
-        ChatEventRouter.route(event: .started)
+        ChatEventRouter.route(event: .applicationInitialized)
         title = "Chats"
     }
 

@@ -24,6 +24,6 @@ class CreateChatViewModelBuilder {
             return
         }
 
-        ChatEndpoint.create(chatWith: contact)
+        ChatEventRouter.route(event: .creatingChat(contact: contact))
     }
 }
