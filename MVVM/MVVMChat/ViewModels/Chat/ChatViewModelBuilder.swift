@@ -47,7 +47,7 @@ class ChatViewModelBuilder {
     }
 
     class func afterShowingMessages(for contact: String) {
-        MessageEventRouter.route(event: .userReads(messagesSentBy: contact))
+        MessageEventRouter.route(event: .userRead(messagesSentBy: contact))
     }
 
     class func send(message: String, to contact: String) {
