@@ -168,7 +168,7 @@ class ChatView: UIView {
 
     private func addConstraints() {
         messageList
-            .attach(sides: [.leading, .trailing], respectingLayoutGuides: true)
+            .attach(sides: [.leading, .trailing], 0.layoutGuideRespecting)
             .attach(top: 0)
         newMessageBlock
             .attach(sides: [.leading, .trailing])

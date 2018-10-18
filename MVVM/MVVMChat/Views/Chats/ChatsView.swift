@@ -69,8 +69,8 @@ class ChatsView: UIView {
     }
 
     private func addConstraints() {
-        chatsTableView.attach(sides: [.top, .leading, .trailing, .bottom], respectingLayoutGuides: true)
-        emptyMessage.attach(sides: [.top, .leading, .trailing, .bottom], respectingLayoutGuides: true)
+        chatsTableView.attach(sides: [.top, .leading, .trailing, .bottom], 0.layoutGuideRespecting)
+        emptyMessage.attach(sides: [.top, .leading, .trailing, .bottom], 0.layoutGuideRespecting)
     }
 }
 

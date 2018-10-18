@@ -78,8 +78,7 @@ extension UIView {
 
     @discardableResult
     public func attach(sides: Set<Side>,
-                       _ offset: Offsetable = 0,
-                       respectingLayoutGuides: Bool = false) -> UIView {
+                       _ offset: Offsetable = 0) -> UIView {
         var top: Offsetable? = nil
         var leading: Offsetable? = nil
         var bottom: Offsetable? = nil
@@ -119,7 +118,7 @@ extension UIView {
         Constraint.attach(self,
                           inside: superview,
                           top: top,
-                          leading: trailing,
+                          leading: leading,
                           bottom: bottom,
                           trailing: trailing)
 

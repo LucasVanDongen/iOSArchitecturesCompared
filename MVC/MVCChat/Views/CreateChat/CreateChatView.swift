@@ -125,7 +125,7 @@ class CreateChatView: UIView {
     }
 
     private func addConstraints() {
-        introduction.attach(sides: [.top, .leading, .trailing], 8, respectingLayoutGuides: true)
+        introduction.attach(sides: [.top, .leading, .trailing], 8.layoutGuideRespecting)
         contact
             .attach(sides: [.leading, .trailing], 8)
             .space(8, .below, introduction)
