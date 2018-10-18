@@ -14,6 +14,7 @@ enum MessageEvent {
     case failedSending(message: Message, contact: String, reason: String)
 
     case received(message: Message, contact: String)
-    case userRead(othersMessages: [Message], sentByContact: String)
+    case userReads(messagesSentBy: String)
+    case userRead(othersMessages: [Message], sentBy: String)
     case otherRead(yourMessage: Message, reader: String)
 }

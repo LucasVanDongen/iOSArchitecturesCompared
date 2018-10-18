@@ -98,7 +98,7 @@ class ChatView: UIView {
 
         messages = viewModel.messages
         load(differences: viewModel.tableViewDifferences, animated: viewModel.shouldAnimateChanges)
-        viewModel.reloaded()
+        viewModel.afterShowingMessages()
         switch viewModel.shouldBeBusy {
         case true: spinner.startAnimating()
         case false: spinner.stopAnimating()

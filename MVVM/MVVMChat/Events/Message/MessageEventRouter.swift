@@ -22,6 +22,15 @@ class MessageEventRouter {
             let previousMessages = ChatModelController.chat(for: contact)?.messages ?? []
             ChatModelController.received(message: message, by: contact)
             MessageEventHandler.received(message: message, by: contact, previousMessages: previousMessages)
+        case .userReads(let contact):
+            let unreadMessagesShown = ChatModelController.unreadMessages(for: contact)
+            ChatModelController.read(others: unreadMessagesShown)
+            guard !unreadMessagesShown.isEmpty else {
+                return
+            }
+
+            MessageEventRouter.route(event: .userRead(othersMessages: unreadMessagesShown,
+                                                      sentBy: contact))
         case .userRead(let othersMessages, let contact):
             ChatModelController.read(others: othersMessages)
             MessageEventHandler.read(messagesBy: contact)

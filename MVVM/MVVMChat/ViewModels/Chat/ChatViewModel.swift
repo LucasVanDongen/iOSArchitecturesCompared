@@ -18,6 +18,6 @@ struct ChatViewModel {
     let contact: String
     let messages: [MessageViewModel]
     let tableViewDifferences: TableViewDataDifferences
-    let send: (String) -> Void
-    let reloaded: () -> Void
+    let send: (_ message: String) -> Void
+    let afterShowingMessages: () -> Void
 }

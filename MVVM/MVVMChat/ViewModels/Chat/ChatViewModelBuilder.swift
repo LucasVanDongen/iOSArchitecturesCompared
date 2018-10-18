@@ -28,18 +28,8 @@ class ChatViewModelBuilder {
                              contact: chat.contact,
                              messages: messages,
                              tableViewDifferences: differences,
-                             send: { (message) in
-            ChatEndpoint.send(message: message, to: chat.contact)
-        }, reloaded: {
-            let unreadMessagesShown = ChatModelController.unreadMessages(for: chat.contact)
-            ChatModelController.read(others: unreadMessagesShown)
-
-            guard !unreadMessagesShown.isEmpty else {
-                return
-            }
-            MessageEventRouter.route(event: .userRead(othersMessages: unreadMessagesShown,
-                                                   sentByContact: chat.contact))
-        })
+                             send: { message in send(message: message, to: chat.contact) },
+                             afterShowingMessages: { afterShowingMessages(for: chat.contact) })
     }
 
     static func buildFailed(reason: String) -> ChatViewModel {
@@ -53,6 +43,14 @@ class ChatViewModelBuilder {
                              messages: [],
                              tableViewDifferences: TableViewDataDifferences.empty,
                              send: { _ in },
-                             reloaded: { })
+                             afterShowingMessages: { })
+    }
+
+    class func afterShowingMessages(for contact: String) {
+        MessageEventRouter.route(event: .userReads(messagesSentBy: contact))
+    }
+
+    class func send(message: String, to contact: String) {
+        ChatEndpoint.send(message: message, to: contact)
     }
 }
