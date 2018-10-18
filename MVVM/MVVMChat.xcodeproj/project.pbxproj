@@ -210,6 +210,15 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
+		A07E2CA82179367C000E4248 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				A0C8EA8E2153EBD60025F31B /* MessageViewModel.swift */,
+				A0C8EA932153ED640025F31B /* MessageViewModelBuilder.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
 		A0A4AC932177AED8002B0AE4 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +284,7 @@
 				A0C8EA8B2153EB930025F31B /* ChatList */,
 				A0328B0921551857001B8B6E /* CreateChat */,
 				A0C8EA902153ED350025F31B /* Chat */,
+				A07E2CA82179367C000E4248 /* Message */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -295,8 +305,6 @@
 			children = (
 				A0C8EA8C2153EBA40025F31B /* ChatViewModel.swift */,
 				A0C8EA912153ED410025F31B /* ChatViewModelBuilder.swift */,
-				A0C8EA8E2153EBD60025F31B /* MessageViewModel.swift */,
-				A0C8EA932153ED640025F31B /* MessageViewModelBuilder.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
