@@ -9,20 +9,20 @@
 import UIKit
 
 class ChatListViewModelBuilder {
+    class func buildLoading() -> ChatListViewModel {
+        return ChatListViewModel(hideEmptyMessage: false,
+                                 hideChats: true,
+                                 showSpinner: true,
+                                 chats: [],
+                                 addChat: addChat)
+    }
+
     class func build(for chats: [Chat]) -> ChatListViewModel {
         let chatListItemViewModels = chats.map(ChatListViewModelBuilder.build)
         return ChatListViewModel(hideEmptyMessage: !chats.isEmpty,
                                  hideChats: chats.isEmpty,
                                  showSpinner: false,
                                  chats: chatListItemViewModels,
-                                 addChat: addChat)
-    }
-
-    class func buildLoading() -> ChatListViewModel {
-        return ChatListViewModel(hideEmptyMessage: false,
-                                 hideChats: true,
-                                 showSpinner: true,
-                                 chats: [],
                                  addChat: addChat)
     }
 
@@ -34,14 +34,17 @@ class ChatListViewModelBuilder {
         return ChatListItemViewModel(contact: chat.contact,
                                      message: lastMessageText,
                                      lastMessageDate: lastMessageDate,
-                                     unreadMessageCount: unreadMessageCount) {
-            let chatViewController = ChatViewController(for: chat)
-            BaseNavigationViewController.pushViewController(chatViewController, animated: true)
-        }
+                                     unreadMessageCount: unreadMessageCount,
+                                     itemTapped: { show(chat: chat) })
     }
 
     private class func addChat() {
         let createChatViewController = CreateChatViewController()
         BaseNavigationViewController.pushViewController(createChatViewController, animated: true)
+    }
+
+    private class func show(chat: Chat) {
+        let chatViewController = ChatViewController(for: chat)
+        BaseNavigationViewController.pushViewController(chatViewController, animated: true)
     }
 }
