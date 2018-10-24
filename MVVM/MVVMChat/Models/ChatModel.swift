@@ -1,5 +1,5 @@
 //
-//  ChatModelController.swift
+//  ChatModel.swift
 //  MVCChat
 //
 //  Created by Lucas van Dongen on 13/09/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChatModelController {
+class ChatModel {
 
     private static var loadedChats: [Chat] = []
 

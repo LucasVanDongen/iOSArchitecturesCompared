@@ -35,7 +35,7 @@ class ChatsViewController: UIViewController {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addChat))
         navigationItem.rightBarButtonItem = addButton
 
-        ChatModelController.fetchChats { [weak self] result in
+        ChatModel.fetchChats { [weak self] result in
             switch result {
             case .failed(let reason):
                 print(reason)
@@ -67,10 +67,10 @@ extension ChatsViewController: ChatsDelegate {
 
 extension ChatsViewController: UpdatedChatDelegate {
     func created(chat: Chat) {
-        customView.state = .loaded(chats: ChatModelController.loadedChats)
+        customView.state = .loaded(chats: ChatModel.loadedChats)
     }
 
     func updated(chat: Chat) {
-        customView.state = .loaded(chats: ChatModelController.loadedChats)
+        customView.state = .loaded(chats: ChatModel.loadedChats)
     }
 }

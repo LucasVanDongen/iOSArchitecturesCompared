@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension ChatWebSocketController: StubMessageSending {
+extension ChatWebSocket: StubMessageSending {
     class func send(stub message: Message, after timeInterval: TimeInterval = 0) {
         guard case .other(let contact) = message.sender else {
             return
@@ -18,7 +18,7 @@ extension ChatWebSocketController: StubMessageSending {
     }
 }
 
-extension ChatWebSocketController: StubMessageReading {
+extension ChatWebSocket: StubMessageReading {
     static func read(stub message: Message, reader: String) {
         MessageEventRouter.route(event: .otherRead(yourMessage: message, reader: reader))
     }

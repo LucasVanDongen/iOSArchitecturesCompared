@@ -61,7 +61,7 @@ class StubMessageSender: NSObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + readDelay) {
             switch simulatedConversation.state {
             case .webSocket:
-                ChatWebSocketController.read(stub: message, reader: simulatedConversation.contact)
+                ChatWebSocket.read(stub: message, reader: simulatedConversation.contact)
             case .inApp, .appClosed:
                 break
             }
@@ -89,7 +89,7 @@ class StubMessageSender: NSObject {
             switch simulatedConversation.state {
             case .webSocket:
                 print("\(baseLog) web socket: \(message.message)!")
-                ChatWebSocketController.send(stub: message)
+                ChatWebSocket.send(stub: message)
             case .inApp, .appClosed:
                 print("\(baseLog) push: \(message.message)!")
                 PushNotificationController.send(stub: message)

@@ -50,7 +50,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let content = response.notification.request.content
-        guard let chat = ChatModelController.loadedChats.first(where: { (chat) -> Bool in
+        guard let chat = ChatModel.loadedChats.first(where: { (chat) -> Bool in
             chat.contact == content.title
         }) else {
             assertionFailure("We shouldn't get a reply on a non-existing chat in this demo")

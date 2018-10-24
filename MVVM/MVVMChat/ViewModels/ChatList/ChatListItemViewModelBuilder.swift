@@ -13,7 +13,7 @@ class ChatListItemViewModelBuilder {
     class func build(for chat: Chat) -> ChatListItemViewModel {
         let lastMessageText = chat.messages.last?.message ?? ""
         let lastMessageDate = (chat.messages.last?.sendDate).map { DateRenderer.string(from: $0) } ?? ""
-        let unreadMessageCount = ChatModelController.unreadMessages(for: chat.contact).count
+        let unreadMessageCount = ChatModel.unreadMessages(for: chat.contact).count
 
         return ChatListItemViewModel(contact: chat.contact,
                                      message: lastMessageText,

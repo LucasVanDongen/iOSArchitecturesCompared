@@ -13,14 +13,14 @@ enum ChatWebSocketMessage {
     case read(message: Message)
 }
 
-class ChatWebSocketController {
+class ChatWebSocket {
     static var currentConnections: [String: (ChatWebSocketMessage) -> Void] = [:]
 
-    class func startSocket(for chat: Chat, whenReceiving received: @escaping (ChatWebSocketMessage) -> Void) {
+    class func start(for chat: Chat, whenReceiving received: @escaping (ChatWebSocketMessage) -> Void) {
         currentConnections[chat.contact] = received
     }
 
-    class func disconnectSocket(for chat: Chat) {
+    class func disconnect(for chat: Chat) {
         currentConnections.removeValue(forKey: chat.contact)
     }
 }

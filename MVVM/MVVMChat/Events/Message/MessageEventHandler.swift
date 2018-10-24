@@ -20,7 +20,7 @@ class MessageEventHandler {
     class func add(listener: ChatListening) {
         weak var weakListener = listener
         chatListening.append(weakListener)
-        guard let chat = ChatModelController.allChats().first(where: { (chat) -> Bool in
+        guard let chat = ChatModel.allChats().first(where: { (chat) -> Bool in
             listener.handles(chatWith: chat.contact)
         }) else {
             listener.updated(chat: ChatViewModelBuilder.buildFailed(reason: "Cannot connect to chat"))
@@ -46,7 +46,7 @@ class MessageEventHandler {
             return
         }
 
-        guard let chat = ChatModelController.chat(for: contact) else {
+        guard let chat = ChatModel.chat(for: contact) else {
             return assertionFailure("Chat for \(contact) should exist")
         }
 
@@ -59,7 +59,7 @@ class MessageEventHandler {
     }
 
     class func sending(message: Message, to contact: String, previousMessages: [Message]) {
-        guard let chat = ChatModelController.chat(for: contact) else {
+        guard let chat = ChatModel.chat(for: contact) else {
             assertionFailure("Chat for \(contact) should exist")
             return
         }
@@ -72,7 +72,7 @@ class MessageEventHandler {
     }
 
     class func sent(message: Message, to contact: String) {
-        guard let chat = ChatModelController.chat(for: contact) else {
+        guard let chat = ChatModel.chat(for: contact) else {
             assertionFailure("Chat for \(contact) should exist")
             return
         }
@@ -82,7 +82,7 @@ class MessageEventHandler {
     }
 
     class func failedSending(message: Message, to contact: String, reason: String) {
-        guard let chat = ChatModelController.chat(for: contact) else {
+        guard let chat = ChatModel.chat(for: contact) else {
             assertionFailure("Chat for \(contact) should exist")
             return
         }
@@ -97,7 +97,7 @@ class MessageEventHandler {
     }
 
     class func read(messagesBy contact: String) {
-        guard let chat = ChatModelController.chat(for: contact) else {
+        guard let chat = ChatModel.chat(for: contact) else {
             assertionFailure("Chat for \(contact) should exist")
             return
         }
@@ -108,7 +108,7 @@ class MessageEventHandler {
     }
 
     class func read(yourMessage: Message, by contact: String) {
-        guard let chat = ChatModelController.chat(for: contact) else {
+        guard let chat = ChatModel.chat(for: contact) else {
             assertionFailure("Chat for \(contact) should exist")
             return
         }
@@ -139,7 +139,7 @@ class MessageEventHandler {
     }
 
     private class func updateApplicationBadge() {
-        UIApplication.shared.applicationIconBadgeNumber = ChatModelController.unreadMessageCount()
+        UIApplication.shared.applicationIconBadgeNumber = ChatModel.unreadMessageCount()
     }
 
 }

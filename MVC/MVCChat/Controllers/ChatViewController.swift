@@ -40,7 +40,7 @@ class ChatViewController: UIViewController {
         ConversationSimulator.createdConversation(with: chat.contact)
 
         title = chat.contact
-        ChatWebSocketController.startSocket(for: chat) { [weak self] (message) in
+        ChatWebSocket.start(for: chat) { [weak self] (message) in
             guard let strongSelf = self else {
                 return
             }
@@ -70,7 +70,7 @@ class ChatViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        ChatWebSocketController.disconnectSocket(for: chat)
+        ChatWebSocket.disconnect(for: chat)
         // Stop receiving fake responses through the websocket
         ConversationSimulator.leftChatViewController(ofConversationWith: chat.contact)
     }
@@ -86,7 +86,7 @@ class ChatViewController: UIViewController {
             return true
         }
 
-        ChatModelController.read(messages: messagesThatShouldBeFlaggedRead, from: chat) { [weak self] update in
+        ChatModel.read(messages: messagesThatShouldBeFlaggedRead, from: chat) { [weak self] update in
             switch update {
             case .failed(let reason):
                 self?.customView.state = .failed(reason: reason)
@@ -105,7 +105,7 @@ class ChatViewController: UIViewController {
     }
 
     private func refreshMessages() {
-        guard let messages = ChatModelController.loadedChats.first(where: { (loadedChat) -> Bool in
+        guard let messages = ChatModel.loadedChats.first(where: { (loadedChat) -> Bool in
             chat.contact == loadedChat.contact
         })?.messages else {
             return assertionFailure("Chat for this ViewController cannot be loaded")
@@ -122,7 +122,7 @@ extension ChatViewController: ChatDelegate {
             return
         }
 
-        ChatModelController.send(message: message, to: chat) { [weak self] result in
+        ChatModel.send(message: message, to: chat) { [weak self] result in
             defer {
                 if case .sent(let message, let chat) = result {
                     // Used to simulate somebody giving responses

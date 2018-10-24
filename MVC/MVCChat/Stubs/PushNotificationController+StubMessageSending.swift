@@ -16,10 +16,10 @@ extension PushNotificationController: StubMessageSending {
         }
 
         let unreadCount: Int
-        if let chatIndex = ChatModelController.loadedChats.index(where: { (chat) -> Bool in
+        if let chatIndex = ChatModel.loadedChats.index(where: { (chat) -> Bool in
             chat.contact == contact
         }) {
-            unreadCount = ChatModelController.loadedChats[chatIndex].messages.filter { message in
+            unreadCount = ChatModel.loadedChats[chatIndex].messages.filter { message in
                 if case .sent = message.state, case .other = message.sender {
                     return true
                 }

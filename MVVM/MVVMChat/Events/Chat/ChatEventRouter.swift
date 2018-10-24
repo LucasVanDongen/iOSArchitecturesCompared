@@ -16,7 +16,7 @@ class ChatEventRouter {
         case .loaded(let chats):
             ChatEventHandler.loaded(chats: chats)
         case .creatingChat(let contact):
-            let chat = ChatModelController.create(chatWith: contact)
+            let chat = ChatModel.create(chatWith: contact)
             ChatEndpoint.create(chat: chat)
             ChatEventHandler.creatingChat()
         case .created(let chat):

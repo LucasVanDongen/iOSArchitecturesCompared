@@ -72,7 +72,7 @@ class ChatEventHandler {
     }
 
     class func updateAllChatLists() {
-        let chatListViewModel = ChatListViewModelBuilder.build(for: ChatModelController.allChats())
+        let chatListViewModel = ChatListViewModelBuilder.build(for: ChatModel.allChats())
         chatListListening.forEach { $0?.updated(list: chatListViewModel) }
     }
 }

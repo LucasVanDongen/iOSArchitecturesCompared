@@ -18,7 +18,7 @@ class ChatEndpoint {
                                      sendDate: Date().addingTimeInterval(-500))
 
             let chats = [Chat(with: contact, messages: [newMessage])]
-            ChatModelController.load(chats: chats)
+            ChatModel.load(chats: chats)
             ChatEventRouter.route(event: .loaded(chats: chats))
         }
     }
@@ -30,8 +30,8 @@ class ChatEndpoint {
     }
 
     class func send(message: String, to contact: String) {
-        let previousMessages = ChatModelController.chat(for: contact)?.messages ?? []
-        let newMessage = ChatModelController.create(message: message, to: contact)
+        let previousMessages = ChatModel.chat(for: contact)?.messages ?? []
+        let newMessage = ChatModel.create(message: message, to: contact)
         let event = MessageEvent.sending(message: newMessage, contact: contact, previousMessages: previousMessages)
         MessageEventRouter.route(event: event)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {

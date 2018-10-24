@@ -36,8 +36,8 @@
 		A0C8EA6A214D91F30025F31B /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA69214D91F30025F31B /* MessageBubble.swift */; };
 		A0C8EA6C214E974E0025F31B /* DateRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA6B214E974E0025F31B /* DateRenderer.swift */; };
 		A0C8EA70214F43F50025F31B /* TableViewDataDifferentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA6F214F43F50025F31B /* TableViewDataDifferentiator.swift */; };
-		A0C8EA74215038080025F31B /* ChatModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA73215038080025F31B /* ChatModelController.swift */; };
-		A0C8EA762150392F0025F31B /* ChatWebSocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA752150392F0025F31B /* ChatWebSocketController.swift */; };
+		A0C8EA74215038080025F31B /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA73215038080025F31B /* ChatModel.swift */; };
+		A0C8EA762150392F0025F31B /* ChatWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA752150392F0025F31B /* ChatWebSocket.swift */; };
 		A0C8EA7921503D900025F31B /* ConversationSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA7821503D900025F31B /* ConversationSimulator.swift */; };
 		A0C8EA7B21503E2D0025F31B /* SimulatedConversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA7A21503E2D0025F31B /* SimulatedConversation.swift */; };
 		A0C8EA7D21504E600025F31B /* StubMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8EA7C21504E600025F31B /* StubMessageSender.swift */; };
@@ -94,8 +94,8 @@
 		A0C8EA69214D91F30025F31B /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		A0C8EA6B214E974E0025F31B /* DateRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRenderer.swift; sourceTree = "<group>"; };
 		A0C8EA6F214F43F50025F31B /* TableViewDataDifferentiator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataDifferentiator.swift; sourceTree = "<group>"; };
-		A0C8EA73215038080025F31B /* ChatModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatModelController.swift; sourceTree = "<group>"; };
-		A0C8EA752150392F0025F31B /* ChatWebSocketController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWebSocketController.swift; sourceTree = "<group>"; };
+		A0C8EA73215038080025F31B /* ChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		A0C8EA752150392F0025F31B /* ChatWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWebSocket.swift; sourceTree = "<group>"; };
 		A0C8EA7821503D900025F31B /* ConversationSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSimulator.swift; sourceTree = "<group>"; };
 		A0C8EA7A21503E2D0025F31B /* SimulatedConversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatedConversation.swift; sourceTree = "<group>"; };
 		A0C8EA7C21504E600025F31B /* StubMessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMessageSender.swift; sourceTree = "<group>"; };
@@ -187,9 +187,9 @@
 		A06C14FF214A145000833E90 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A0C8EA73215038080025F31B /* ChatModelController.swift */,
+				A0C8EA73215038080025F31B /* ChatModel.swift */,
 				A0C8EA9C215418FD0025F31B /* ChatEndpoint.swift */,
-				A0C8EA752150392F0025F31B /* ChatWebSocketController.swift */,
+				A0C8EA752150392F0025F31B /* ChatWebSocket.swift */,
 				A06C1504214A152900833E90 /* Request */,
 				A06C1502214A148100833E90 /* Chat.swift */,
 				A0C8EA67214D812A0025F31B /* Message.swift */,
@@ -520,7 +520,7 @@
 				A0A4AC9A2179060B002B0AE4 /* ChatListItemViewModelBuilder.swift in Sources */,
 				A0C8EA62214D612E0025F31B /* ChatView.swift in Sources */,
 				A0C8EA7B21503E2D0025F31B /* SimulatedConversation.swift in Sources */,
-				A0C8EA762150392F0025F31B /* ChatWebSocketController.swift in Sources */,
+				A0C8EA762150392F0025F31B /* ChatWebSocket.swift in Sources */,
 				A06C1503214A148100833E90 /* Chat.swift in Sources */,
 				A0C8EA9B215403A30025F31B /* ChatEventHandler.swift in Sources */,
 				A0328B06215516D3001B8B6E /* UIButton+BlockAction.swift in Sources */,
@@ -555,7 +555,7 @@
 				A0C8EA5F214C64830025F31B /* BaseAccessoryView.swift in Sources */,
 				A0DB1DE9214767D800808129 /* AppDelegate.swift in Sources */,
 				A06C150E214A190600833E90 /* ChatTableViewCell.swift in Sources */,
-				A0C8EA74215038080025F31B /* ChatModelController.swift in Sources */,
+				A0C8EA74215038080025F31B /* ChatModel.swift in Sources */,
 				A0C8EA8D2153EBA40025F31B /* ChatViewModel.swift in Sources */,
 				A0C8EA972153F08F0025F31B /* ChatEvent.swift in Sources */,
 				A06C150A214A152900833E90 /* ParameterMapper.swift in Sources */,

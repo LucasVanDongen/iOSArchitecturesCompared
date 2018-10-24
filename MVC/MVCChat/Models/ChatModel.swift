@@ -1,5 +1,5 @@
 //
-//  ChatModelController.swift
+//  ChatModel.swift
 //  MVCChat
 //
 //  Created by Lucas van Dongen on 13/09/2018.
@@ -31,7 +31,7 @@ enum ReadMessageUpdate {
     case remoteUpdated(chat: Chat)
 }
 
-class ChatModelController {
+class ChatModel {
     private(set) static var loadedChats: [Chat] = []
     class func fetchChats(whenDone result: @escaping (ChatsFetchResult) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

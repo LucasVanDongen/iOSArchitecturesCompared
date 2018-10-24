@@ -15,7 +15,7 @@ extension PushNotificationController: StubMessageSending {
             return
         }
 
-        let unreadCount = ChatModelController.unreadMessageCount()
+        let unreadCount = ChatModel.unreadMessageCount()
 
         let content = UNMutableNotificationContent()
         content.title = contact

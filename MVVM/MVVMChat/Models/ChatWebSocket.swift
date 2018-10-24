@@ -1,5 +1,5 @@
 //
-//  ChatWebSocketController.swift
+//  ChatWebSocket.swift
 //  MVCChat
 //
 //  Created by Lucas van Dongen on 17/09/2018.
@@ -13,14 +13,14 @@ enum ChatWebSocketMessage {
     case read(message: Message)
 }
 
-class ChatWebSocketController {
+class ChatWebSocket {
     static var currentlyConnectedContacts: [String] = []
 
-    class func startSocket(for contact: String) {
+    class func start(for contact: String) {
         currentlyConnectedContacts.append(contact)
     }
 
-    class func disconnectSocket(for contact: String) {
+    class func disconnect(for contact: String) {
         currentlyConnectedContacts = currentlyConnectedContacts.filter { $0 == contact }
     }
 }

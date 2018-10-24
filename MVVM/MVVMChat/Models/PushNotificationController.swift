@@ -22,7 +22,7 @@ class PushNotificationController {
 
     class func handle(response: UNNotificationResponse) {
         let content = response.notification.request.content
-        guard let chat = ChatModelController.chat(for: content.title) else {
+        guard let chat = ChatModel.chat(for: content.title) else {
             return assertionFailure("We shouldn't get a reply on a non-existing chat in this demo")
         }
 

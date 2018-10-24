@@ -62,7 +62,7 @@ class StubMessageSender: NSObject {
             switch simulatedConversation.state {
             case .webSocket:
                 let reader = Message.Sender.other(name: simulatedConversation.contact)
-                ChatWebSocketController.read(stub: message, reader: reader)
+                ChatWebSocket.read(stub: message, reader: reader)
             case .inApp, .appClosed:
                 break
             }
@@ -90,7 +90,7 @@ class StubMessageSender: NSObject {
             switch simulatedConversation.state {
             case .webSocket:
                 print("\(baseLog) web socket: \(message.message)!")
-                ChatWebSocketController.send(stub: message)
+                ChatWebSocket.send(stub: message)
             case .inApp, .appClosed:
                 print("\(baseLog) push: \(message.message)!")
                 PushNotificationController.send(stub: message)
@@ -114,7 +114,7 @@ class StubMessageSender: NSObject {
                               message: salutes.random ?? "See you!", state: .sent,
                               sendDate: Date().addingTimeInterval(goodbyeTimeInterval))
 
-        ChatModelController.received(message: message, by: conversation.contact)
+        ChatModel.received(message: message, by: conversation.contact)
 
         print("🤖: sending goodbye to \(conversation.contact)")
         PushNotificationController.send(stub: message, after: goodbyeTimeInterval)

@@ -52,7 +52,7 @@ extension CreateChatViewController: CreateChatDelegate {
         }
 
         customView.state = .creating
-        ChatModelController.createChat(for: contact) { [weak self] (result) in
+        ChatModel.createChat(for: contact) { [weak self] (result) in
             guard let strongSelf = self else {
                 return
             }
